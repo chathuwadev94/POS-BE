@@ -1,9 +1,11 @@
 import { BadRequestException, HttpException, Inject, Injectable } from '@nestjs/common';
 import { IUserRepository, IUserRepositoryInterface } from '../interfaces/user-repository.interface';
-import { CreateUserDto } from '../dtos/create-user.dto';
+import { CreateUserDto, UpdateDto } from '../dtos/create-user.dto';
 import { IUser } from '../interfaces/user.interface';
 import { hash } from 'bcrypt'
 import { AppRoles } from 'src/app/core/enums/role.enum';
+import { IPagination } from 'src/app/core/interfaces/page.interface';
+import { IPaginatedEntity } from 'src/app/core/interfaces/paginated-entity.interface';
 
 @Injectable()
 export class UserService {
@@ -42,7 +44,15 @@ export class UserService {
         return await this.userRepo.getOneById(id);
     }
 
-    async findUserWithLocationById(id: number): Promise<IUser> {
-        return await this.userRepo.findUserWithLocationById(id);
+    async findAll(pagination: IPagination): Promise<IPaginatedEntity<IUser>> {
+        return await this.userRepo.findAllwithpaginate(pagination);
+    }
+
+    async update(id: number, updateDto: UpdateDto): Promise<IUser> {
+        return await this.userRepo.updateAndGetEntity(id, updateDto);
+    }
+
+    async userSearchByNIC(nic: string, paginate: IPagination): Promise<IPaginatedEntity<IUser>> {
+        return await this.userRepo.findUsersByNIC(nic, paginate);
     }
 }

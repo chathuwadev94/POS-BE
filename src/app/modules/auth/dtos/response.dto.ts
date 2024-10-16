@@ -35,3 +35,12 @@ export class LoginResDto implements IUser {
     refreshToken?: string;
 }
 
+export class ChangeRoleResDto {
+    @ApiProperty({ type: Boolean, description: 'role change' })
+    success: boolean;
+}
+
+export class ChangePasswordResDto {
+    @ApiProperty({ type: Boolean, description: 'Password Change' })
+    success: boolean;
+}

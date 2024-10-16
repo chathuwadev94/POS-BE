@@ -14,13 +14,13 @@ async function bootstrap() {
   app.useGlobalFilters(new ValidationFilter(), new AllExceptionsFilter());
   app.enableCors();
   const options = new DocumentBuilder()
-    .setTitle('Location Device Management API')
-    .setDescription('API details of Location Device Management project')
+    .setTitle('Point Of Sale System API')
+    .setDescription('API details of POS System project')
     .setVersion('0.0.1')
     .addBearerAuth()
     .build();
 
-  const document = SwaggerModule.createDocument(app, options);
+  const document = SwaggerModule.createDocument(app, options);0
   SwaggerModule.setup(`${configuration().app.version}/docs`, app, document, {
     explorer: true,
     swaggerOptions: {
