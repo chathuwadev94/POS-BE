@@ -20,7 +20,4 @@ roles
 
     .grant([AppRoles.DEFAULT])
     .readOwn([UserController.name, AuthController.name])
-    .createOwn([UserController.name])
-    .updateOwn([UserController.name])
-    .deleteOwn([UserController.name])
 

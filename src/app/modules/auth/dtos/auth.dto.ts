@@ -1,4 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { AppRoles } from "src/app/core/enums/role.enum";
+import { UserStatus } from "../../user/enums/status.enum";
 
 export class LoginDto {
     @ApiProperty({
@@ -29,3 +31,43 @@ export class RefreshDto {
     refreshToken: string
 }
 
+
+export class ChangePasswordDto {
+    @ApiProperty({
+        type: String,
+        description: 'Old Password',
+        required: true
+    })
+    oldPassword: string;
+
+    @ApiProperty({
+        type: String,
+        description: 'New Password',
+        required: true
+    })
+    newPassword: string;
+}
+
+
+export class ChangeRoleDto {
+
+    @ApiProperty({
+        type: [AppRoles],
+        enum: AppRoles,
+        description: 'Roles',
+        required: true
+    })
+    role: string[]
+}
+
+export class ChangeStatusDto {
+
+    @ApiProperty({
+        type: Number,
+        enum:UserStatus,
+        description: 'Current Password',
+        required: true
+    })
+    status: number;
+
+}

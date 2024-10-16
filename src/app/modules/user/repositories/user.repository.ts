@@ -39,4 +39,9 @@ export class UserRepository
     return await this.getAllwithPaginate({}, {}, [], {}, paginate);
   }
 
+  async findUsersByNIC(nic: string, paginate: IPagination): Promise<IPaginatedEntity<IUser>> {
+    return await this.getAllwithPaginate({ nic: Like(`%${nic}%`) }, {}, [], {}, paginate);
+
+  }
+
 }
