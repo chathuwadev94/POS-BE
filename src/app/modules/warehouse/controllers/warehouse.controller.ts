@@ -50,7 +50,7 @@ export class WarehouseController {
     @UseInterceptors(new TransformInterceptor(new ViewWarehouseDto()))
     @ApiOperation({ description: 'Get All Warehouses' })
     @ApiCreatedResponse({ type: [ResponseWarehouseDto], description: 'Get All Warehouses' })
-    async getAllUsers(
+    async getAllWarehouse(
         @Query() filter: WarehouseFilterDto,
         @Pager() pagination: IPagination
     ) {
@@ -68,7 +68,7 @@ export class WarehouseController {
     @UseInterceptors(new TransformInterceptor(new ViewWarehouseDto()))
     @ApiOperation({ description: 'Get  Warehouse by Id' })
     @ApiCreatedResponse({ type: ResponseWarehouseDto, description: 'Get Warehouse by Id' })
-    async getUserById(@Param('id') id: number) {
+    async getWarehouseById(@Param('id') id: number) {
         return await this.warehouseServ.findById(id);
     }
 
@@ -85,11 +85,11 @@ export class WarehouseController {
     @ApiCreatedResponse({ type: ResponseWarehouseDto, description: 'Update Warehouse' })
     @ApiBody({ type: UpdateWarehouseDto })
     @HttpCode(200)
-    async updateUser(@Param('id') id: number, @Body() updateUserDto: UpdateWarehouseDto) {
+    async updateWarehouse(@Param('id') id: number, @Body() updateUserDto: UpdateWarehouseDto) {
         return await this.warehouseServ.update(id, updateUserDto);
     }
 
-    // Search Warehouse by Lcation
+    // Search Warehouse by Location
     @Get('warehouse-search')
     @UseGuards(JwtAuthGuard, ACGuard)
     @UseRoles({
@@ -101,7 +101,7 @@ export class WarehouseController {
     @ApiOperation({ description: 'Get Warehouse by Location' })
     @ApiCreatedResponse({ type: ResponseWarehouseDto, description: 'Get Warehouse by Location' })
     @HttpCode(200)
-    async getUserByNIC(
+    async getWarehouseByLocation(
         @Query() filter: WarehouseFilterDto,
         @Pager() pagination: IPagination,
         @Query('location') location: string) {

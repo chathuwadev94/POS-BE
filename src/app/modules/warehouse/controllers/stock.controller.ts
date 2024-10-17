@@ -50,7 +50,7 @@ export class StockController {
     @UseInterceptors(new TransformInterceptor(new ViewStockDto()))
     @ApiOperation({ description: 'Get All Stockes' })
     @ApiCreatedResponse({ type: [ResponseStockDto], description: 'Get All Stockes' })
-    async getAllUsers(
+    async getAllStocks(
         @Query() filter: StockFilterDto,
         @Pager() pagination: IPagination
     ) {
@@ -68,7 +68,7 @@ export class StockController {
     @UseInterceptors(new TransformInterceptor(new ViewStockDto()))
     @ApiOperation({ description: 'Get  Stock by Id' })
     @ApiCreatedResponse({ type: ResponseStockDto, description: 'Get Stock by Id' })
-    async getUserById(@Param('id') id: number) {
+    async getStockById(@Param('id') id: number) {
         return await this.stockServ.findById(id);
     }
 
@@ -85,7 +85,7 @@ export class StockController {
     @ApiCreatedResponse({ type: ResponseStockDto, description: 'Update Stock' })
     @ApiBody({ type: UpdateStockDto })
     @HttpCode(200)
-    async updateUser(@Param('id') id: number, @Body() updateUserDto: UpdateStockDto) {
+    async updateStock(@Param('id') id: number, @Body() updateUserDto: UpdateStockDto) {
         return await this.stockServ.update(id, updateUserDto);
     }
 
@@ -101,7 +101,7 @@ export class StockController {
     @ApiOperation({ description: 'Get Stock by Id' })
     @ApiCreatedResponse({ type: ResponseStockDto, description: 'Get Stock by Id' })
     @HttpCode(200)
-    async getUserByNIC(
+    async searchStockById(
         @Query() filter: StockFilterDto,
         @Pager() pagination: IPagination,
         @Query('id') id: string) {
