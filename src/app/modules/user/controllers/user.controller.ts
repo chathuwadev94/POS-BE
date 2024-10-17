@@ -36,6 +36,7 @@ export class UserController {
   @ApiBody({ type: CreateUserDto })
   @HttpCode(201)
   async create(@Body() createUserDto: CreateUserDto) {
+
     return await this.userSer.create(createUserDto);
   }
 
