@@ -21,4 +21,13 @@ export class CreateWarehouseDto {
         required: true,
     })
     address: string
+
+    @ApiProperty({
+        type: Number,
+        description: 'Capacity of the warehouse',
+        required: true,
+    })
+    capacity: number
 }
+
+export class UpdateWarehouseDto extends CreateWarehouseDto {}

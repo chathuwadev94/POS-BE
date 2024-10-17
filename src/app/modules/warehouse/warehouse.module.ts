@@ -6,11 +6,16 @@ import { IWarehouseRepositoryInterface } from './interfaces/warehouse-repository
 import { WarehouseRepositorty } from './repositories/warehouse.repository';
 import { IStockRepositoryInterface } from './interfaces/stock-repository.interface';
 import { StockRepository } from './repositories/stock.repository';
+import { StockController } from './controllers/stock.controller';
+import { WarehouseController } from './controllers/warehouse.controller';
+import { WarehouseService } from './services/warehouse.service';
+import { StockService } from './services/stock.service';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([Warehouse, Stock])
     ],
+    controllers:[StockController,WarehouseController],
     providers: [
         {
             provide: IWarehouseRepositoryInterface,
@@ -19,6 +24,14 @@ import { StockRepository } from './repositories/stock.repository';
         {
             provide: IStockRepositoryInterface,
             useClass: StockRepository
+        },
+        {
+            provide: WarehouseService.name,
+            useClass:WarehouseService
+        },
+        {
+            provide:StockService.name,
+            useClass:StockService
         }
     ]
 })

@@ -1,6 +1,6 @@
 import { IWarehouse } from "../interfaces/warehouse.interface";
 
-export class ViewStockDto {
+export class ViewWarehouseDto {
     formatDataSet(data: IWarehouse) {
         return {
             id: data.id,

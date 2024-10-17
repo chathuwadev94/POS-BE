@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { IWarehouse } from "../interfaces/warehouse.interface";
 
 export class CreateStockDto {
     @ApiProperty({
@@ -28,4 +29,8 @@ export class CreateStockDto {
         required: true,
     })
     capacity: number;
+
+    warehous:IWarehouse
 }
+
+export class UpdateStockDto extends CreateStockDto {}
