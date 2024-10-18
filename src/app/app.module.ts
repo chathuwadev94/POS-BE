@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AccessControlModule } from 'nest-access-control';
 import { roles } from './core/guards/app.role';
 import { WarehouseModule } from './modules/warehouse/warehouse.module';
+import { ItemModule } from './modules/items/item.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { WarehouseModule } from './modules/warehouse/warehouse.module';
     UserModule,
     AuthModule,
     AccessControlModule.forRoles(roles),
-    WarehouseModule
+    WarehouseModule,
+    ItemModule
   ],
   controllers: [AppController],
   providers: [AppService],

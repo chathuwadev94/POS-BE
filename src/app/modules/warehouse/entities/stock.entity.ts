@@ -1,7 +1,8 @@
 import { BaseEntity } from "src/app/core/repositories/entity/base.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Warehouse } from "./warehouse.entity";
 import { StockStatus } from "../enums/status.enum";
+import { Item } from "../../items/entities/item.entity";
 
 @Entity('stock')
 export class Stock extends BaseEntity {
@@ -23,5 +24,8 @@ export class Stock extends BaseEntity {
 
     @ManyToOne(() => Warehouse, warehouse => warehouse.stocks)
     warehouse: Warehouse;
+
+    @OneToOne(()=>Item,item=>item.stock)
+    item:Item
 
 }
