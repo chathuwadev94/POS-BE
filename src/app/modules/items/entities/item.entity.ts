@@ -1,7 +1,8 @@
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Category } from "./category.entity";
 import { Barcode } from "./barcode.entity";
 import { Stock } from "../../warehouse/entities/stock.entity";
+import { SaleItem } from "../../sales/entities/sale-Item.entity";
 
 @Entity('item')
 export class Item {
@@ -37,4 +38,7 @@ export class Item {
 
     @OneToOne(() => Stock, stock => stock.item)
     stock: Stock
+
+    @OneToMany(() => SaleItem, saleItem => saleItem.item)
+    saleItems: SaleItem[];
 }

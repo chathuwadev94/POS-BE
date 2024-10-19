@@ -4,6 +4,7 @@ import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColum
 import { UserStatus } from "../enums/status.enum";
 import { Gender } from "src/app/core/enums/gender.enum";
 import { AppRoles } from "src/app/core/enums/role.enum";
+import { Sale } from "../../sales/entities/sale.entity";
 
 @Entity('user')
 @Unique(['nic', 'userName'])
@@ -40,6 +41,9 @@ export class User extends BaseEntity {
 
     @Column({ type: 'enum', enum: UserStatus, default: UserStatus.PENDING })
     status: number;
+
+    @OneToMany(() => Sale, sale => sale.user)
+    sales: Sale[];
 
 
 }
