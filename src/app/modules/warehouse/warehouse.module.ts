@@ -15,7 +15,7 @@ import { StockService } from './services/stock.service';
     imports: [
         TypeOrmModule.forFeature([Warehouse, Stock])
     ],
-    controllers:[StockController,WarehouseController],
+    controllers: [StockController, WarehouseController],
     providers: [
         {
             provide: IWarehouseRepositoryInterface,
@@ -27,11 +27,17 @@ import { StockService } from './services/stock.service';
         },
         {
             provide: WarehouseService.name,
-            useClass:WarehouseService
+            useClass: WarehouseService
         },
         {
-            provide:StockService.name,
-            useClass:StockService
+            provide: StockService.name,
+            useClass: StockService
+        }
+    ],
+    exports: [
+        {
+            provide: StockService.name,
+            useClass: StockService
         }
     ]
 })

@@ -1,5 +1,6 @@
 import { IBaseModel } from "src/app/core/repositories/interface/base.model.interface";
 import { IWarehouse } from "./warehouse.interface";
+import { IItem } from "../../items/interfaces/item.interface";
 
 export interface IStock extends IBaseModel {
     id?: number;
@@ -8,4 +9,5 @@ export interface IStock extends IBaseModel {
     itemId?: number;
     status?: number;
     warehouse?: IWarehouse;
+    item?:IItem;
 }
