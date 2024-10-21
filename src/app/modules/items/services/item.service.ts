@@ -62,4 +62,9 @@ export class ItemService {
         return await this.itemRepo.searchItemByBarcode(code, page);
     }
 
+    // find itemlis by id ist
+    async findItemsByIdList(idList: number[]): Promise<IItem[]> {
+        return await this.itemRepo.findByIdList(idList);
+    }
+
 }

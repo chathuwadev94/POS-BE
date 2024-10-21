@@ -30,4 +30,22 @@ export class StockRepository
         return await this.getOne({ itemId: itemId })
     }
 
+    async findStockByItemBarcodeAndWarehouseId(barcodeValue: number, warehouseId: number): Promise<IStock> {
+        return await this.stockRepo
+            .createQueryBuilder('stock')
+            .innerJoinAndSelect('stock.item', 'item')  // Join the item to get its relation
+            .innerJoinAndSelect('item.barcode', 'barcode')  // Join the barcode related to the item
+            .where('stock.warehouseId = :warehouseId', { warehouseId })
+            .andWhere('barcode.code = :barcodeValue', { barcodeValue })
+            .orderBy('stock.createdAt', 'DESC')
+            .getOne();
+    }
+
+    async findByIdList(idList: number[]): Promise<IStock[]> {
+        return await this.stockRepo
+            .createQueryBuilder('stock')
+            .where('stock.id IN (:...idList)', { idList: idList })
+            .getMany();
+    }
+
 }

@@ -22,3 +22,8 @@ export class ISaleItemDetailsDto {
     qty: number;
     stockId:number;
 }
+
+export interface ISaleCalculation {
+    totalAmount: number;
+    saleItemList:ISaleItem[]
+}

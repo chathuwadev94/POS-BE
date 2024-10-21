@@ -16,7 +16,7 @@ export default () => ({
   },
   jwt: {
     secret: process.env.JWT_SECRET || 'assi-a123',
-    expire_time: process.env.JWT_EXP_TIME || '120s',
+    expire_time: process.env.JWT_EXP_TIME || '1d',
     refresh_jwt_expire_time: process.env.REFRESH_JWT_EXP_TIME || '1d',
     pasword_reset:process.env.PASSWORD_RESET || '123456'
   },

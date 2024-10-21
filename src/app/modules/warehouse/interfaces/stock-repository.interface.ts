@@ -9,4 +9,6 @@ export interface IStockRepository extends IBaseRepository<Stock> {
     findAllwithpaginate(paginate: IPagination): Promise<IPaginatedEntity<IStock>>
     searchStockById(id: number, page: IPagination): Promise<IPaginatedEntity<IStock>>
     findSockByItemId(itemId: number): Promise<IStock>
+    findStockByItemBarcodeAndWarehouseId(barcodeValue: number, warehouseId: number): Promise<IStock>
+    findByIdList(idList: number[]): Promise<IStock[]>
 }

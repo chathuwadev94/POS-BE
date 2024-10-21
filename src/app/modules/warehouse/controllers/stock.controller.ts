@@ -11,6 +11,8 @@ import { ResponseStockDto } from '../dtos/response-stock.dto';
 import { Pager } from 'src/app/core/decorators/page.decorator';
 import { IPagination } from 'src/app/core/interfaces/page.interface';
 import { StockFilterDto } from '../dtos/stock-filter.dto';
+import { CurrentUser } from 'src/app/core/decorators/current-user.decorator';
+import { ITokenUser } from 'src/app/core/interfaces/token-user';
 
 @Controller('stock')
 @ApiTags('Stock')
@@ -57,6 +59,43 @@ export class StockController {
         return await this.stockServ.findAllWithPaginate(pagination);
     }
 
+    // Search Stock by Id
+    @Get('stock-search')
+    @UseGuards(JwtAuthGuard, ACGuard)
+    @UseRoles({
+        resource: StockController.name,
+        action: 'read',
+        possession: "own"
+    })
+    @UseInterceptors(new TransformInterceptor(new ViewStockDto()))
+    @ApiOperation({ description: 'Get Stock by Id' })
+    @ApiCreatedResponse({ type: ResponseStockDto, description: 'Get Stock by Id' })
+    @HttpCode(200)
+    async searchStockById(
+        @Query() filter: StockFilterDto,
+        @Pager() pagination: IPagination,
+        @Query('id') id: string) {
+        return await this.stockServ.searchStockById(parseInt(id), pagination);
+    }
+
+    // Get Stocke By Item Id According to Relavan Warehouse
+    @Get('warehouse-item')
+    @UseGuards(JwtAuthGuard, ACGuard)
+    @UseRoles({
+        resource: StockController.name,
+        action: 'read',
+        possession: "own",
+    })
+    @UseInterceptors(new TransformInterceptor(new ViewStockDto()))
+    @ApiOperation({ description: 'Get  Stock by Barcode And Warehouse' })
+    @ApiCreatedResponse({ type: ResponseStockDto, description: 'Get  Stock by Barcode And Warehouse' })
+    async getStockByitemIdAndWarehouse(
+        @Query('barcode') barcode: string,
+        @CurrentUser() user: ITokenUser
+    ) {
+        return await this.stockServ.findStockByBarcodeAndWarehouseId(parseInt(barcode), user.warehouseId);
+    }
+
     // Get Stocke By Id
     @Get(':id')
     @UseGuards(JwtAuthGuard, ACGuard)
@@ -89,23 +128,7 @@ export class StockController {
         return await this.stockServ.update(id, updateUserDto);
     }
 
-    // Search Stock by Id
-    @Get('stock-search')
-    @UseGuards(JwtAuthGuard, ACGuard)
-    @UseRoles({
-        resource: StockController.name,
-        action: 'read',
-        possession: "own"
-    })
-    @UseInterceptors(new TransformInterceptor(new ViewStockDto()))
-    @ApiOperation({ description: 'Get Stock by Id' })
-    @ApiCreatedResponse({ type: ResponseStockDto, description: 'Get Stock by Id' })
-    @HttpCode(200)
-    async searchStockById(
-        @Query() filter: StockFilterDto,
-        @Pager() pagination: IPagination,
-        @Query('id') id: string) {
-        return await this.stockServ.searchStockById(parseInt(id), pagination);
-    }
+
+
 
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Category } from "./category.entity";
 import { Barcode } from "./barcode.entity";
 import { Stock } from "../../warehouse/entities/stock.entity";
@@ -28,7 +28,8 @@ export class Item extends BaseEntity {
     @ManyToOne(() => Category, category => category.item)
     category: Category
 
-    @OneToOne(() => Barcode, barcode => barcode.item)
+    @OneToOne(() => Barcode, barcode => barcode.item,{cascade: true})
+    @JoinColumn()
     barcode: Barcode;
 
     @OneToMany(() => Stock, stock => stock.item)

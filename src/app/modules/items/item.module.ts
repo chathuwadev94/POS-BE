@@ -47,6 +47,12 @@ import { WarehouseModule } from '../warehouse/warehouse.module';
             provide: CategoryService.name,
             useClass: CategoryService
         }
+    ],
+    exports: [
+        {
+            provide: ItemService.name,
+            useClass: ItemService
+        },
     ]
 })
 export class ItemModule { }

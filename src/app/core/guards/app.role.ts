@@ -7,6 +7,7 @@ import { BarcodeController } from 'src/app/modules/items/controllers/barcode.con
 import { ItemController } from 'src/app/modules/items/controllers/item.controller';
 import { StockController } from 'src/app/modules/warehouse/controllers/stock.controller';
 import { WarehouseController } from 'src/app/modules/warehouse/controllers/warehouse.controller';
+import { SaleController } from 'src/app/modules/sales/controller/sale.controller';
 
 export const roles: RolesBuilder = new RolesBuilder();
 
@@ -31,6 +32,7 @@ roles
     .deleteOwn([CategoryController.name,BarcodeController.name,ItemController.name,StockController.name,WarehouseController.name])
 
     .grant([AppRoles.CASHIER])
+    .createOwn([SaleController.name])
     .readOwn([CategoryController.name,BarcodeController.name,ItemController.name,StockController.name,WarehouseController.name])
 
     .grant([AppRoles.DEFAULT])

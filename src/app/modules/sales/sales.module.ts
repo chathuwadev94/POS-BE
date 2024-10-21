@@ -10,9 +10,11 @@ import { SaleItemService } from './services/sale-item.service';
 import { SaleController } from './controller/sale.controller';
 import { UserModule } from '../user/user.module';
 import { ISaleRepositoryInterface } from './interfaces/sale-repository.interface';
+import { WarehouseModule } from '../warehouse/warehouse.module';
+import { ItemModule } from '../items/item.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Sale, SaleItem]),UserModule],
+    imports: [TypeOrmModule.forFeature([Sale, SaleItem]), UserModule, WarehouseModule, ItemModule],
     controllers: [SaleController],
     providers: [
         {

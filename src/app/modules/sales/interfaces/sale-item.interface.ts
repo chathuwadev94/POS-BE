@@ -8,4 +8,5 @@ export interface ISaleItem extends IBaseModel {
     totalPrice?: number;
     sale?: ISale
     item?: IItem
+    itemId?:number
 }

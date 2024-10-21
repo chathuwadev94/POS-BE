@@ -53,4 +53,14 @@ export class StockService {
     async findStockByItemId(itemId: number): Promise<IStock> {
         return await this.stockRepo.findSockByItemId(itemId);
     }
+
+    // Find Stock By Barcode Value and WarehouseId
+    async findStockByBarcodeAndWarehouseId(barcode: number, warehouseId: number): Promise<IStock> {
+        return await this.stockRepo.findStockByItemBarcodeAndWarehouseId(barcode, warehouseId);
+    }
+
+    // Find Stocks By  Id List
+    async findStocksByIdList(idList: number[]): Promise<IStock[]> {
+        return await this.stockRepo.findByIdList(idList);
+    }
 }

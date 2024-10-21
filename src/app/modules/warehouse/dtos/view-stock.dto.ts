@@ -6,7 +6,8 @@ export class ViewStockDto {
             id: data.id,
             qty: data.qty,
             warehouse: data.warehouse,
-            item: data.itemId,
+            item: data.item,
+            itemId:data.itemId,
             status: data.status,
             unitPrice:data.unitPrice || 0
         };

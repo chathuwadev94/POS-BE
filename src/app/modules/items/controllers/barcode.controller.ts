@@ -31,7 +31,7 @@ export class BarcodeController {
     @ApiOperation({ description: 'Create Barcode' })
     @ApiCreatedResponse({ type: ResponseBarcodeDto, description: 'Create Barcode' })
     @ApiBody({ type: CreateBarcodeDto })
-    async create(createDto: CreateBarcodeDto): Promise<IBarcode> {
+    async create(@Body() createDto: CreateBarcodeDto): Promise<IBarcode> {
         return await this.barcodeServ.create(createDto);
     }
 
