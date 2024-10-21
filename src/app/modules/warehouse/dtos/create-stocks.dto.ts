@@ -30,6 +30,13 @@ export class CreateStockDto {
     })
     capacity: number;
 
+    @ApiProperty({
+        type: Number,
+        description: 'Unit Price',
+        required: true,
+    })
+    unitPrice: number;
+
     warehous:IWarehouse
 }
 

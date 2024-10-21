@@ -12,7 +12,9 @@ export class ViewUserDto {
       address: data.address || null,
       status: data.status,
       roles: data.roles || [],
-      userName: data.userName || null
+      userName: data.userName || null,
+      showroomI:data.showroomId || null,
+      showroom:data.showroom || null
     };
   }
 }

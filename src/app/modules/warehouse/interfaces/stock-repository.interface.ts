@@ -8,4 +8,5 @@ export const IStockRepositoryInterface = 'IStockRepository'
 export interface IStockRepository extends IBaseRepository<Stock> {
     findAllwithpaginate(paginate: IPagination): Promise<IPaginatedEntity<IStock>>
     searchStockById(id: number, page: IPagination): Promise<IPaginatedEntity<IStock>>
+    findSockByItemId(itemId: number): Promise<IStock>
 }

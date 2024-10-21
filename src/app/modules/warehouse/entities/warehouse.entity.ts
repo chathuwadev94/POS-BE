@@ -1,6 +1,7 @@
 import { BaseEntity } from "src/app/core/repositories/entity/base.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Stock } from "./stock.entity";
+import { Showroom } from "./showroom.entity";
 
 @Entity('warehouse')
 export class Warehouse extends BaseEntity {
@@ -22,6 +23,9 @@ export class Warehouse extends BaseEntity {
 
     @OneToMany(() => Stock, stock => stock.warehouseId)
     stocks: Stock[];
+
+    @OneToMany(() => Showroom, showroom => showroom.warehouse)
+    showrooms: Showroom[];
 
 
 }

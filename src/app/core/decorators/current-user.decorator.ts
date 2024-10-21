@@ -10,7 +10,10 @@ export const CurrentUser = createParamDecorator(
         }
         const currentUser: ITokenUser = {
             id: request.user.sub.id,
-            role: request.user.sub.role
+            role: request.user.sub.role,
+            showroomId: request.user.sub.showroomId,
+            warehouseId: request.user.sub.warehouseId
+
         };
         return currentUser;
     },

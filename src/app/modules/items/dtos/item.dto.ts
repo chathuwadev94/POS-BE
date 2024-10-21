@@ -17,20 +17,6 @@ export class CreateItemDto {
 
     @ApiProperty({
         type: Number,
-        description: 'Item Price',
-        required: true,
-    })
-    price: number;
-
-    @ApiProperty({
-        type: Number,
-        description: 'Item unit Price',
-        required: true,
-    })
-    unitPrice: number
-
-    @ApiProperty({
-        type: Number,
         description: 'Item Cost',
     })
     cost: number;

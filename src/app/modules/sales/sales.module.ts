@@ -7,12 +7,16 @@ import { SaleRepository } from './repositories/sale.repository';
 import { SaleItemRepository } from './repositories/sale-item.repository';
 import { SaleService } from './services/sale.service';
 import { SaleItemService } from './services/sale-item.service';
+import { SaleController } from './controller/sale.controller';
+import { UserModule } from '../user/user.module';
+import { ISaleRepositoryInterface } from './interfaces/sale-repository.interface';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Sale, SaleItem])],
+    imports: [TypeOrmModule.forFeature([Sale, SaleItem]),UserModule],
+    controllers: [SaleController],
     providers: [
         {
-            provide: `${ISaleItemRepositoryInterface}`,
+            provide: `${ISaleRepositoryInterface}`,
             useClass: SaleRepository
         },
         {

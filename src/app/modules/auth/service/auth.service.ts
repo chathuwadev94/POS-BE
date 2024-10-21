@@ -43,6 +43,8 @@ export class AuthService {
             sub: {
                 id: user.id,
                 role: user.roles,
+                showroomId:user.showroomId,
+                warehouseId:user.showroom.warehouseId
             }
         }
         return { ...user, accessToken: this.jwtServ.sign(payload), refreshToken: this.jwtServ.sign(payload, { expiresIn: configuration().jwt.refresh_jwt_expire_time }) }

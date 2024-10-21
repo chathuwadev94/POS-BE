@@ -10,4 +10,5 @@ export interface IStock extends IBaseModel {
     status?: number;
     warehouse?: IWarehouse;
     item?:IItem;
+    unitPrice: number;
 }

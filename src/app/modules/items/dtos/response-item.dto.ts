@@ -15,12 +15,6 @@ export class ResponseItemDto implements IItem {
     @ApiProperty({ type: String, description: 'Item Description' })
     description: string;
 
-    @ApiProperty({ type: Number, description: 'Item Price' })
-    price: number;
-
-    @ApiProperty({ type: Number, description: 'Item  Unit Price' })
-    unitPrice: number
-
     @ApiProperty({ type: Number, description: 'Item Cost' })
     cost: number;
 

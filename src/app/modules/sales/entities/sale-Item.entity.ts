@@ -1,9 +1,10 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Sale } from "./sale.entity";
 import { Item } from "../../items/entities/item.entity";
+import { BaseEntity } from "src/app/core/repositories/entity/base.entity";
 
 @Entity('sale-item')
-export class SaleItem {
+export class SaleItem extends BaseEntity {
     @PrimaryGeneratedColumn()
     id:number;
 

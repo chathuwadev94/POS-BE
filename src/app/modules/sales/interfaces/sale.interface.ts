@@ -10,3 +10,15 @@ export interface ISale extends IBaseModel {
     user?: IUser
     saleItems?: ISaleItem[];
 }
+
+export interface ISaleItemDetails {
+    itemId: number;
+    qty: number;
+    stockId:number;
+}
+
+export class ISaleItemDetailsDto {
+    itemId: number;
+    qty: number;
+    stockId:number;
+}

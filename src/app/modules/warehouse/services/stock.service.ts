@@ -48,4 +48,9 @@ export class StockService {
     async searchStockById(id: number, page: IPagination): Promise<IPaginatedEntity<IStock>> {
         return await this.stockRepo.searchStockById(id, page);
     }
+
+    // Find Stock by ItemId
+    async findStockByItemId(itemId: number): Promise<IStock> {
+        return await this.stockRepo.findSockByItemId(itemId);
+    }
 }

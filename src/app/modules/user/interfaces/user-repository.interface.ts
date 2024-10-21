@@ -8,7 +8,7 @@ export const IUserRepositoryInterface = 'IUserRepository';
 export interface IUserRepository extends IBaseRepository<User> {
     findByUserName(userName: string): Promise<IUser>
     isNicAvailable(nic: string): Promise<boolean>
-    findUserWithLocationById(id: number): Promise<IUser>
+    findUserWithShowroomById(id: number): Promise<IUser>
     findAllwithpaginate(paginate: IPagination): Promise<IPaginatedEntity<IUser>>
     findUsersByNIC(nic: string, paginate: IPagination): Promise<IPaginatedEntity<IUser>>
 }

@@ -7,8 +7,6 @@ export interface IItem extends IBaseModel {
     id?: number;
     name?: string;
     description?: string;
-    price?: number;
-    unitPrice?: number
     cost?: number;
     image?: string;
     manufactur?: string;

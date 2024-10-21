@@ -10,20 +10,29 @@ import { StockController } from './controllers/stock.controller';
 import { WarehouseController } from './controllers/warehouse.controller';
 import { WarehouseService } from './services/warehouse.service';
 import { StockService } from './services/stock.service';
+import { IShowroomRepositoryInterface } from './interfaces/showroom-repository.interface';
+import { showroomRepository } from './repositories/showroom.repository';
+import { Showroom } from './entities/showroom.entity';
+import { ShowroomController } from './controllers/showroom.controller';
+import { ShowroomService } from './services/showroom.service';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Warehouse, Stock])
+        TypeOrmModule.forFeature([Warehouse, Stock, Showroom])
     ],
-    controllers: [StockController, WarehouseController],
+    controllers: [StockController, WarehouseController, ShowroomController],
     providers: [
         {
-            provide: IWarehouseRepositoryInterface,
+            provide: `${IWarehouseRepositoryInterface}`,
             useClass: WarehouseRepositorty
         },
         {
-            provide: IStockRepositoryInterface,
+            provide: `${IStockRepositoryInterface}`,
             useClass: StockRepository
+        },
+        {
+            provide: `${IShowroomRepositoryInterface}`,
+            useClass: showroomRepository
         },
         {
             provide: WarehouseService.name,
@@ -32,6 +41,10 @@ import { StockService } from './services/stock.service';
         {
             provide: StockService.name,
             useClass: StockService
+        },
+        {
+            provide: ShowroomService.name,
+            useClass: ShowroomService
         }
     ],
     exports: [

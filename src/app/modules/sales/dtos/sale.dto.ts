@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { ISaleItemDetails, ISaleItemDetailsDto } from "../interfaces/sale.interface";
 
 export class CreateSaleDto {
     @ApiProperty({
@@ -22,6 +23,12 @@ export class CreateSaleDto {
     })
     itemCount: number;
 
+    @ApiProperty({
+        type: ISaleItemDetailsDto,
+        description: 'Sale Items List',
+        required: true,
+    })
+    saleItemsList: ISaleItemDetails
 
     userId: number;
 

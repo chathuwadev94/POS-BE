@@ -7,7 +7,8 @@ export class ViewStockDto {
             qty: data.qty,
             warehouse: data.warehouse,
             item: data.itemId,
-            status: data.status
+            status: data.status,
+            unitPrice:data.unitPrice || 0
         };
     }
 }

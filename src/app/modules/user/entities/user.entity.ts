@@ -1,10 +1,11 @@
 
 import { BaseEntity } from "src/app/core/repositories/entity/base.entity";
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { UserStatus } from "../enums/status.enum";
 import { Gender } from "src/app/core/enums/gender.enum";
 import { AppRoles } from "src/app/core/enums/role.enum";
 import { Sale } from "../../sales/entities/sale.entity";
+import { Showroom } from "../../warehouse/entities/showroom.entity";
 
 @Entity('user')
 @Unique(['nic', 'userName'])
@@ -36,6 +37,9 @@ export class User extends BaseEntity {
     @Column({ length: 200 })
     password: string;
 
+    @Column()
+    showroomId: number;
+
     @Column({ type: 'varchar', array: true })
     roles: string[];
 
@@ -45,5 +49,7 @@ export class User extends BaseEntity {
     @OneToMany(() => Sale, sale => sale.user)
     sales: Sale[];
 
+    @ManyToOne(() => Showroom, showroom => showroom.users)
+    showroom: Showroom;
 
 }

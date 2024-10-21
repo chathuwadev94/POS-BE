@@ -22,7 +22,7 @@ export class WarehouseRepositorty
     }
 
     async searchWarehouseByLocation(location: string, page: IPagination): Promise<IPaginatedEntity<IWarehouse>> {
-        return await this.getAllwithPaginate({ nic: Like(`%${location}%`) }, {}, [], {}, page);
+        return await this.getAllwithPaginate({ location: Like(`%${location}%`) }, {}, [], {}, page);
     }
 
 }

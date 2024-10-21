@@ -44,6 +44,10 @@ export class UserService {
         return await this.userRepo.getOneById(id);
     }
 
+    async findUserWithShowroomById(id: number): Promise<IUser> {
+        return await this.userRepo.findUserWithShowroomById(id);
+    }
+
     async findAll(pagination: IPagination): Promise<IPaginatedEntity<IUser>> {
         return await this.userRepo.findAllwithpaginate(pagination);
     }
