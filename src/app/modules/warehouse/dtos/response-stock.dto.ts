@@ -19,6 +19,9 @@ export class ResponseStockDto implements IStock {
     @ApiProperty({ type: Number, enum:StockStatus, description: 'Status' })
     status?: number;
 
+    @ApiProperty({ type: Number, enum:StockStatus, description: 'Status' })
+    unitPrice: number;
+
     @ApiProperty({ type: String, description: 'Wearehouse' })
     warehouse?: IWarehouse;
     

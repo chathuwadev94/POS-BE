@@ -26,4 +26,8 @@ export class StockRepository
         return await this.getAllwithPaginate({ id: id }, {}, [], {}, page);
     }
 
+    async findSockByItemId(itemId: number): Promise<IStock> {
+        return await this.getOne({ itemId: itemId })
+    }
+
 }

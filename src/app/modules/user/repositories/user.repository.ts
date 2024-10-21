@@ -19,11 +19,11 @@ export class UserRepository
   }
 
   async findByUserName(userName: string): Promise<IUser> {
-    return await this.getOne({ userName: userName });
+    return await this.getOne({ userName: userName },{},['showroom']);
   }
 
-  async findUserWithLocationById(id: number): Promise<IUser> {
-    return await this.getOneById(id, {}, ['locations']);
+  async findUserWithShowroomById(id: number): Promise<IUser> {
+    return await this.getOneById(id, {}, ['showroom']);
   }
 
   async isNicAvailable(nic: string): Promise<boolean> {

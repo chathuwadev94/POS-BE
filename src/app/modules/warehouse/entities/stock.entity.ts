@@ -19,13 +19,16 @@ export class Stock extends BaseEntity {
     @Column()
     itemId: number;
 
+    @Column()
+    unitPrice: number
+
     @Column({ type: Number, enum: StockStatus, default: StockStatus.OUT_OF_STOCK })
     status: number;
 
     @ManyToOne(() => Warehouse, warehouse => warehouse.stocks)
     warehouse: Warehouse;
 
-    @OneToOne(()=>Item,item=>item.stock)
+    @ManyToOne(()=>Item,item=>item.stocks)
     item:Item
 
 }

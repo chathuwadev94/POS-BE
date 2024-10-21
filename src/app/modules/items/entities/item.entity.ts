@@ -1,10 +1,12 @@
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Category } from "./category.entity";
 import { Barcode } from "./barcode.entity";
 import { Stock } from "../../warehouse/entities/stock.entity";
+import { SaleItem } from "../../sales/entities/sale-Item.entity";
+import { BaseEntity } from "src/app/core/repositories/entity/base.entity";
 
 @Entity('item')
-export class Item {
+export class Item extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -13,12 +15,6 @@ export class Item {
 
     @Column()
     description: string;
-
-    @Column()
-    price: number;
-
-    @Column()
-    unitPrice: number
 
     @Column()
     cost: number;
@@ -35,6 +31,9 @@ export class Item {
     @OneToOne(() => Barcode, barcode => barcode.item)
     barcode: Barcode;
 
-    @OneToOne(() => Stock, stock => stock.item)
-    stock: Stock
+    @OneToMany(() => Stock, stock => stock.item)
+    stocks: Stock[]
+
+    @OneToMany(() => SaleItem, saleItem => saleItem.item)
+    saleItems: SaleItem[];
 }

@@ -64,6 +64,15 @@ export class CreateUserDto {
     })
     password: string;
 
+    @IsNotEmpty()
+    @ApiProperty({
+        type: Number,
+        description: 'Showroom Id',
+        required: true,
+    })
+    showroomId: number;
+
+
     roles?: string[];
 }
 

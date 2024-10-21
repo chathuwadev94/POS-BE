@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IUser } from "../interfaces/user.interface";
+import { IShowroom } from "../../warehouse/interfaces/showroom.interface";
 
 export class UserResponseDto implements IUser {
   @ApiProperty({ type: String, description: 'UserID' })
@@ -20,6 +21,11 @@ export class UserResponseDto implements IUser {
   @ApiProperty({ type: String, description: 'User Current Status' })
   status: number;
 
+  @ApiProperty({ type: String, description: 'User Showroom ID' })
+  showroomId: number;
+
+  @ApiProperty({ type: {}, description: 'User Showroom ' })
+  showroom: IShowroom;
 
 
 }

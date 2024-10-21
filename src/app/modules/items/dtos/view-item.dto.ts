@@ -6,8 +6,6 @@ export class ViewItemDto {
             id: data.id,
             name: data.name || null,
             description: data.description || null,
-            price: data.price || null,
-            unitPrice: data.unitPrice || null,
             cost: data.cost || null,
             image: data.image || null,
             manufactur: data.manufactur || null,

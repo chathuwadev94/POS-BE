@@ -65,7 +65,7 @@ export class UserController {
   @ApiOperation({ description: 'Get Logged In User' })
   @ApiCreatedResponse({ type: UserResponseDto, description: 'Get Logged In User' })
   async getLoggedInUser(@CurrentUser() currentUser: ITokenUser) {
-    return await this.userSer.findById(currentUser.id);
+    return await this.userSer.findUserWithShowroomById(currentUser.id);
   }
 
   // Get User By Id
