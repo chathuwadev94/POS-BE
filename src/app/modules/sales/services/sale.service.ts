@@ -32,26 +32,45 @@ export class SaleService {
             throw new BadRequestException('Item Count does not match...');
         }
         const user: IUser = await this.userServ.findUserWithShowroomById(userId);
-        const saleCalculation: ISaleCalculation = (await this.calculateTotalAmmount(createDto.saleItemsList));
+        const saleCalculation: ISaleCalculation = (await this.calculateTotalAmmountAndGetFormatedSaleItemList(createDto.saleItemsList));
         let createSale: ISale = { user: user, date: new Date, itemCount: createDto.saleItemsList.length, totalAmount: saleCalculation.totalAmount };
         const sale: ISale = await this.saleRepo.create(createSale);
         const createSaleItemDto: CreateSaleItemDto = { sale: sale, saleItems: saleCalculation.saleItemList }
-        return await this.saleItemsServ.createSaleItemList(createSaleItemDto);
+        const response = await this.saleItemsServ.createSaleItemList(createSaleItemDto);
+        await this.updateStocks(createDto.saleItemsList);
+        return response
     }
 
-    async calculateTotalAmmount(saleItems: ISaleItemDetails[]): Promise<ISaleCalculation> {
-        const stockIdList: number[] = saleItems.map(ele => ele.stockId);
-        const stocks: IStock[] = await this.stockServ.findStocksByIdList(stockIdList);
+    // Calculate Total Amount of Sale and Formated Saleitems List According to Stock price and Total Amount
+    async calculateTotalAmmountAndGetFormatedSaleItemList(saleItems: ISaleItemDetails[]): Promise<ISaleCalculation> {
+        const stocks: IStock[] = await this.getStocksBySaleItemsDetails(saleItems);
         let tempSaleItems: ISaleItem[] = []
         let totalAmount = 0;
 
         stocks.map((stock: IStock) => {
-            const saleItem: ISaleItemDetails = saleItems.find(e => e.stockId === stock.id)
+            const saleItem: ISaleItemDetails = saleItems.find(e => e.stockId === stock.id);
             totalAmount += saleItem.qty * stock.unitPrice;
             let saleItemObj: ISaleItem = { quantity: saleItem.qty, unitPrice: stock.unitPrice, totalPrice: (saleItem.qty * stock.unitPrice), itemId: saleItem.itemId }
             tempSaleItems.push(saleItemObj);
         });
         return { totalAmount: totalAmount, saleItemList: tempSaleItems };
+    }
+
+    // Update Stocks Quantity after Sale
+    async updateStocks(saleItems: ISaleItemDetails[]): Promise<IStock[]> {
+        const stocks: IStock[] = await this.getStocksBySaleItemsDetails(saleItems);
+        const tempStockList: IStock[] = stocks.map((stock: IStock) => {
+            const saleItem: ISaleItemDetails = saleItems.find(e => e.stockId === stock.id)
+            stock.qty -= saleItem.qty;
+            return stock;
+        })
+        return await this.stockServ.updateStocksList(tempStockList);
+    }
+
+    // Get Stocks By Stocks Id List
+    async getStocksBySaleItemsDetails(saleItems: ISaleItemDetails[]): Promise<IStock[]> {
+        const stockIdList: number[] = saleItems.map(ele => ele.stockId);
+        return await this.stockServ.findStocksByIdList(stockIdList);
     }
 
     // Get Sale By ID

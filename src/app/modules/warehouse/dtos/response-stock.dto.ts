@@ -2,6 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IStock } from "../interfaces/stock.interface";
 import { IWarehouse } from "../interfaces/warehouse.interface";
 import { StockStatus } from "../enums/status.enum";
+import { ISaleItemDetails } from "../../sales/interfaces/sale.interface";
 
 export class ResponseStockDto implements IStock {
     @ApiProperty({ type: Number, description: 'StockId' })
@@ -16,13 +17,25 @@ export class ResponseStockDto implements IStock {
     @ApiProperty({ type: Number, description: 'Item Id' })
     itemId?: number;
 
-    @ApiProperty({ type: Number, enum:StockStatus, description: 'Status' })
+    @ApiProperty({ type: Number, enum: StockStatus, description: 'Status' })
     status?: number;
 
-    @ApiProperty({ type: Number, enum:StockStatus, description: 'Status' })
+    @ApiProperty({ type: Number, enum: StockStatus, description: 'Status' })
     unitPrice: number;
 
     @ApiProperty({ type: String, description: 'Wearehouse' })
     warehouse?: IWarehouse;
-    
+
+}
+
+export class ResponseItemQtyIncrementDto implements ISaleItemDetails {
+    @ApiProperty({ type: Number, description: 'StockId' })
+    stockId: number;
+
+    @ApiProperty({ type: Number, description: 'Quantity' })
+    qty: number;
+
+    @ApiProperty({ type: Number, description: 'ItemId' })
+    itemId: number;
+
 }

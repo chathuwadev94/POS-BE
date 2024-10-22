@@ -3,14 +3,14 @@ import { StockService } from '../services/stock.service';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
 import { ACGuard, UseRoles } from 'nest-access-control';
 import { TransformInterceptor } from 'src/app/core/interceptors/transform.interceptor';
-import { ViewStockDto } from '../dtos/view-stock.dto';
+import { ViewItemQtyIncrementDto, ViewStockDto } from '../dtos/view-stock.dto';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateStockDto, UpdateStockDto } from '../dtos/create-stocks.dto';
 import { IStock } from '../interfaces/stock.interface';
-import { ResponseStockDto } from '../dtos/response-stock.dto';
+import { ResponseItemQtyIncrementDto, ResponseStockDto } from '../dtos/response-stock.dto';
 import { Pager } from 'src/app/core/decorators/page.decorator';
 import { IPagination } from 'src/app/core/interfaces/page.interface';
-import { StockFilterDto } from '../dtos/stock-filter.dto';
+import { StockFilterDto, itemQtyIncrementDto } from '../dtos/stock-filter.dto';
 import { CurrentUser } from 'src/app/core/decorators/current-user.decorator';
 import { ITokenUser } from 'src/app/core/interfaces/token-user';
 
@@ -78,7 +78,25 @@ export class StockController {
         return await this.stockServ.searchStockById(parseInt(id), pagination);
     }
 
-    // Get Stocke By Item Id According to Relavan Warehouse
+    @Get('item-qty-increment')
+    @UseGuards(JwtAuthGuard, ACGuard)
+    @UseRoles({
+        resource: StockController.name,
+        action: 'read',
+        possession: "own"
+    })
+    @UseInterceptors(new TransformInterceptor(new ViewItemQtyIncrementDto()))
+    @ApiOperation({ description: 'Item Quantity Increment' })
+    @ApiCreatedResponse({ type: ResponseItemQtyIncrementDto, description: 'Item Quantity Increment' })
+    @HttpCode(200)
+    async itemQtyIncrement(
+        @Query() filter: itemQtyIncrementDto,
+        @CurrentUser() user: ITokenUser
+    ) {
+        return await this.stockServ.itemQtyIncrement(parseInt(filter.stockId), parseInt(filter.itemId), parseInt(filter.qty), user.warehouseId);
+    }
+
+    // Get Stocke By Item Id According to Relavant Warehouse
     @Get('warehouse-item')
     @UseGuards(JwtAuthGuard, ACGuard)
     @UseRoles({

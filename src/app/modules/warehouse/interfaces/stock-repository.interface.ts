@@ -11,4 +11,6 @@ export interface IStockRepository extends IBaseRepository<Stock> {
     findSockByItemId(itemId: number): Promise<IStock>
     findStockByItemBarcodeAndWarehouseId(barcodeValue: number, warehouseId: number): Promise<IStock>
     findByIdList(idList: number[]): Promise<IStock[]>
+    updateStockList(stocks: IStock[]): Promise<IStock[]>
+    findStocksByItemId(itemId: number,warehouseId:number): Promise<IStock[]>
 }
