@@ -25,11 +25,18 @@ export class ItemRepository
     }
 
     async searchItemByBarcode(code: string, page: IPagination): Promise<IPaginatedEntity<IItem>> {
-        return await this.getAllwithPaginate({ barcode: { code: code } }, {}, ['category', 'barcode'], {}, page);
+        return await this.getAllwithPaginate({ barcode: { code: Like(`${code}%`) } }, {}, ['category', 'barcode'], {}, page);
     }
 
     async findItemsbyCategory(categoryId: number, page: IPagination): Promise<IPaginatedEntity<IItem>> {
         return await this.getAllwithPaginate({ category: { id: categoryId } }, {}, ['category', 'barcode'], {}, page);
+    }
+
+    async findByIdList(idList: number[]): Promise<IItem[]> {
+        return await this.itemRepo
+            .createQueryBuilder('item')
+            .where('item.id IN (:...idList)', { idList: idList })
+            .getMany();
     }
 
 }

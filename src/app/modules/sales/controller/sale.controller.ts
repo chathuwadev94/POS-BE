@@ -3,9 +3,9 @@ import { SaleService } from '../services/sale.service';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
 import { ACGuard, UseRoles } from 'nest-access-control';
 import { TransformInterceptor } from 'src/app/core/interceptors/transform.interceptor';
-import { ViewSaleDto } from '../dtos/view-sale.dto';
+import { ViewSaleDto, ViewSaleInvoiceResponseDto } from '../dtos/view-sale.dto';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { SaleResponseDto } from '../dtos/response-sale.dto';
+import { ISaleItemsResponse, SaleResponseDto } from '../dtos/response-sale.dto';
 import { CreateSaleDto, UpdateSaleDto } from '../dtos/sale.dto';
 import { CurrentUser } from 'src/app/core/decorators/current-user.decorator';
 import { ITokenUser } from 'src/app/core/interfaces/token-user';
@@ -30,12 +30,12 @@ export class SaleController {
         action: 'create',
         possession: "own",
     })
-    @UseInterceptors(new TransformInterceptor(new ViewSaleDto()))
+    @UseInterceptors(new TransformInterceptor(new ViewSaleInvoiceResponseDto()))
     @ApiOperation({ description: 'Create Sale' })
     @ApiCreatedResponse({ type: SaleResponseDto, description: 'Create Sale' })
     @ApiBody({ type: CreateSaleDto })
     @HttpCode(201)
-    async create(@Body() createDto: CreateSaleDto, @CurrentUser() user: ITokenUser) {
+    async create(@Body() createDto: CreateSaleDto, @CurrentUser() user: ITokenUser): Promise<ISaleItemsResponse> {
         return await this.saleServ.create(createDto, user.id);
     }
 

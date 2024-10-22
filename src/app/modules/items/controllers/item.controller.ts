@@ -56,6 +56,47 @@ export class ItemController {
         return await this.itemServ.findAllwithPagination(page);
     }
 
+      // Search Item by Name
+      @Get('search-by-name')
+      @UseGuards(JwtAuthGuard, ACGuard)
+      @UseRoles({
+          resource: ItemController.name,
+          action: 'read',
+          possession: "own"
+      })
+      @UseInterceptors(new TransformInterceptor(new ViewItemDto()))
+      @ApiOperation({ description: 'Get items By Name' })
+      @ApiCreatedResponse({ type: ResponseItemDto, description: 'Get items By Name' })
+      @HttpCode(200)
+      async searcjItemByName(
+          @Query() filter: ItemFilterDto,
+          @Pager() pagination: IPagination,
+          @Query('name') name: string) {
+  
+          return await this.itemServ.searchItemByName(name, pagination);
+      }
+  
+      // Search Item By Barcode
+      @Get('search-by-barcode')
+      @UseGuards(JwtAuthGuard, ACGuard)
+      @UseRoles({
+          resource: ItemController.name,
+          action: 'read',
+          possession: "own"
+      })
+      @UseInterceptors(new TransformInterceptor(new ViewItemDto()))
+      @ApiOperation({ description: 'Get items By Barcode' })
+      @ApiCreatedResponse({ type: ResponseItemDto, description: 'Get items By Barcode' })
+      @HttpCode(200)
+      async searcjItemByBarcode(
+          @Query() filter: ItemFilterDto,
+          @Pager() pagination: IPagination,
+          @Query('bcode') bcode: string) {
+  
+          return await this.itemServ.searchItemByBarcode(bcode, pagination);
+      }
+  
+
     // Get Item by Id
     @Get(':id')
     @UseGuards(JwtAuthGuard, ACGuard)
@@ -127,44 +168,5 @@ export class ItemController {
         return await this.itemServ.finditemsByCategory(parseInt(catId), pagination);
     }
 
-    // Search Item by Name
-    @Get('search-by-name')
-    @UseGuards(JwtAuthGuard, ACGuard)
-    @UseRoles({
-        resource: ItemController.name,
-        action: 'read',
-        possession: "own"
-    })
-    @UseInterceptors(new TransformInterceptor(new ViewItemDto()))
-    @ApiOperation({ description: 'Get items By Name' })
-    @ApiCreatedResponse({ type: ResponseItemDto, description: 'Get items By Name' })
-    @HttpCode(200)
-    async searcjItemByName(
-        @Query() filter: ItemFilterDto,
-        @Pager() pagination: IPagination,
-        @Query('name') name: string) {
-
-        return await this.itemServ.searchItemByName(name, pagination);
-    }
-
-    // Search Item By Barcode
-    @Get('search-by-barcode')
-    @UseGuards(JwtAuthGuard, ACGuard)
-    @UseRoles({
-        resource: ItemController.name,
-        action: 'read',
-        possession: "own"
-    })
-    @UseInterceptors(new TransformInterceptor(new ViewItemDto()))
-    @ApiOperation({ description: 'Get items By Barcode' })
-    @ApiCreatedResponse({ type: ResponseItemDto, description: 'Get items By Barcode' })
-    @HttpCode(200)
-    async searcjItemByBarcode(
-        @Query() filter: ItemFilterDto,
-        @Pager() pagination: IPagination,
-        @Query('bcode') bcode: string) {
-
-        return await this.itemServ.searchItemByName(bcode, pagination);
-    }
-
+  
 }
