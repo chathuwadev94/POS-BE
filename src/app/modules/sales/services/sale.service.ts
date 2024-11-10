@@ -33,7 +33,7 @@ export class SaleService {
         }
         const user: IUser = await this.userServ.findUserWithShowroomById(userId);
         const saleCalculation: ISaleCalculation = (await this.calculateTotalAmmountAndGetFormatedSaleItemList(createDto.saleItemsList));
-        let createSale: ISale = { user: user, date: new Date, itemCount: createDto.saleItemsList.length, totalAmount: saleCalculation.totalAmount };
+        let createSale: ISale = { user: user, date: new Date, itemCount: createDto.saleItemsList.length, totalAmount: saleCalculation.totalAmount, payment: createDto.payment };
         const sale: ISale = await this.saleRepo.create(createSale);
         const createSaleItemDto: CreateSaleItemDto = { sale: sale, saleItems: saleCalculation.saleItemList }
         const response = await this.saleItemsServ.createSaleItemList(createSaleItemDto);

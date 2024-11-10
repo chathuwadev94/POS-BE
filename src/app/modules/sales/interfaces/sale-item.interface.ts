@@ -10,3 +10,4 @@ export interface ISaleItem extends IBaseModel {
     item?: IItem
     itemId?:number
 }
+  

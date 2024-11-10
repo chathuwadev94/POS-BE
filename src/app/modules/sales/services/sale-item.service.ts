@@ -52,7 +52,8 @@ export class SaleItemService {
         const netAmount = saleItems.reduce((accumulator, item) => { return accumulator + item.totalPrice }, 0)
         const totalQty = saleItems.reduce((accumulator, item) => { return accumulator + item.quantity }, 0)
 
-        const response: ISaleItemsResponse = { id: createDto.sale.id, itemsCount: itemsListDto.length, totalQty: totalQty, netAmount: netAmount, saleItems: saleItems }
+        const response: ISaleItemsResponse = { id: createDto.sale.id, itemsCount: itemsListDto.length, totalQty: totalQty, netAmount: netAmount,
+             saleItems: saleItems,date:createDto.sale.createdAt ,payment:createDto.sale.payment}
         // Update Stock
         return response
     }

@@ -22,6 +22,7 @@ export class ViewItemQtyIncrementDto {
             stockId: data.stockId,
             qty: data.qty,
             itemId: data.itemId,
+            unitPrice:data.unitPrice | 0
         };
     }
 }

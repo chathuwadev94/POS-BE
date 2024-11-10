@@ -17,6 +17,9 @@ export class Sale extends BaseEntity {
     @Column()
     itemCount: number;
 
+    @Column({nullable:true, default:0})
+    payment: number;
+
     @ManyToOne(() => User, user => user.sales)
     user: User
 

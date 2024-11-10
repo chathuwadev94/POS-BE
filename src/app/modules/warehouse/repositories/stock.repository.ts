@@ -38,7 +38,7 @@ export class StockRepository
             .where('stock.warehouseId = :warehouseId', { warehouseId })
             .andWhere('stock.qty > 0')
             .andWhere('barcode.code = :barcodeValue', { barcodeValue })
-            .orderBy('stock.createdAt', 'DESC')
+            .orderBy('stock.createdAt', 'ASC')
             .getOne();
     }
 
@@ -58,7 +58,7 @@ export class StockRepository
         return await this.stockRepo
             .createQueryBuilder('stock')
             .where('stock.itemId = :itemId', { itemId })
-            .where('stock.warehouseId = :warehouseId', { warehouseId })
+            .andWhere('stock.warehouseId = :warehouseId', { warehouseId })
             .andWhere('stock.qty > 0')
             .orderBy('stock.createdAt', 'DESC')
             .getMany();

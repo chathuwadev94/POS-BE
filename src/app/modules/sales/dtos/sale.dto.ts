@@ -15,7 +15,16 @@ export class CreateSaleDto {
         description: 'Sale Items List',
         required: true,
     })
-    saleItemsList: ISaleItemDetails[]
+    saleItemsList: ISaleItemDetails[];
+
+    @ApiProperty({
+        type: Number,
+        description: 'Sale Item Count',
+        required: true,
+    })
+    payment: number;
+
+   
 
 }
 

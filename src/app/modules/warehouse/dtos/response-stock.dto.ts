@@ -38,4 +38,7 @@ export class ResponseItemQtyIncrementDto implements ISaleItemDetails {
     @ApiProperty({ type: Number, description: 'ItemId' })
     itemId: number;
 
+    @ApiProperty({ type: Number, description: 'Unit Price' })
+    unitPrice: number;
+
 }
