@@ -10,4 +10,6 @@ export interface ISaleItemsResponse {
     itemsCount:number;
     totalQty:number;
     saleItems: ISaleItem[];
+    date:Date,
+    payment:number;
 }

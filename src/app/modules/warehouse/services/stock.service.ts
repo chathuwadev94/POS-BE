@@ -82,8 +82,8 @@ export class StockService {
     // get stockid and itemid and qty from FE
     async itemQtyIncrement(stockId: number, itemId: number, qty: number, warehouseId: number): Promise<ISaleItemDetails> {
         const stocksList: IStock[] = await this.findStocksByItemIdAndWarehouse(itemId, warehouseId);
-        let itemDetail: ISaleItemDetails = { stockId: stockId, qty: qty, itemId: itemId };
         let relaventStock: IStock = stocksList.find(s => s.id === stockId)
+        let itemDetail: ISaleItemDetails = { stockId: stockId, qty: qty, itemId: itemId, unitPrice: relaventStock.unitPrice };
         if (stocksList && stocksList.length > 0 && relaventStock.qty >= qty) {
             return itemDetail;
         } else if (stocksList.length == 1) {
@@ -92,7 +92,7 @@ export class StockService {
         else {
             const qtyAvailableStockIndex: number = stocksList.findIndex(e => e.qty >= qty);
             if (qtyAvailableStockIndex >= 0) {
-                let itemDetail: ISaleItemDetails = { stockId: stocksList[qtyAvailableStockIndex].id, qty: qty, itemId: itemId };
+                let itemDetail: ISaleItemDetails = { stockId: stocksList[qtyAvailableStockIndex].id, qty: qty, itemId: itemId, unitPrice: stocksList[qtyAvailableStockIndex].unitPrice };
                 return itemDetail;
             } else {
                 throw new NotFoundException('Item Available in Two Difference Stock...');

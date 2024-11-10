@@ -9,12 +9,14 @@ export interface ISale extends IBaseModel {
     itemCount?: number;
     user?: IUser
     saleItems?: ISaleItem[];
+    payment: number;
 }
 
 export interface ISaleItemDetails {
     itemId: number;
     qty: number;
     stockId:number;
+    unitPrice:number;
 }
 
 export class ISaleItemDetailsDto {
