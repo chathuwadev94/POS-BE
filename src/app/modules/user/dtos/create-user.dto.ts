@@ -72,6 +72,14 @@ export class CreateUserDto {
     })
     showroomId: number;
 
+    @IsNotEmpty()
+    @ApiProperty({
+        type: String,
+        description: 'Contact No',
+        required: true,
+    })
+    phoneNumber: string;
+
 
     roles?: string[];
 }

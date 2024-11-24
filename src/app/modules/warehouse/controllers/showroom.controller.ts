@@ -57,6 +57,38 @@ export class ShowroomController {
         return await this.showroomServ.findAllWithPagination(pagination);
     }
 
+    @Get('findAll')
+    @UseGuards(JwtAuthGuard, ACGuard)
+    @UseRoles({
+        resource: ShowroomController.name,
+        action: 'read',
+        possession: "own",
+    })
+    @UseInterceptors(new TransformInterceptor(new ViewShowroomDto()))
+    @ApiOperation({ description: 'Get All Showrooms List' })
+    @ApiCreatedResponse({ type: [ResponseShowroomDto], description: 'Get All Showrooms List' })
+    async getAllList() {
+        return await this.showroomServ.findAll();
+    }
+
+    @Get('search-name')
+    @UseGuards(JwtAuthGuard, ACGuard)
+    @UseRoles({
+        resource: ShowroomController.name,
+        action: 'read',
+        possession: "own",
+    })
+    @UseInterceptors(new TransformInterceptor(new ViewShowroomDto()))
+    @ApiOperation({ description: 'Get All Showrooms By Name' })
+    @ApiCreatedResponse({ type: [ResponseShowroomDto], description: 'Get All Showrooms By Name' })
+    async getAllByname(
+        @Query() filter: ShowroomFilterDto,
+        @Pager() pagination: IPagination,
+        @Query('name') name: string
+    ) {
+        return await this.showroomServ.findAllByNameWithPagination(name, pagination);
+    }
+
     // Get Showroom By Id
     @Get(':id')
     @UseGuards(JwtAuthGuard, ACGuard)

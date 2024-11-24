@@ -6,4 +6,6 @@ import { IPaginatedEntity } from "src/app/core/interfaces/paginated-entity.inter
 export const IShowroomRepositoryInterface = 'IShowroomRepository'
 export interface IShowroomRepository extends IBaseRepository<IShowroom> {
     findAllwithpaginate(paginate: IPagination): Promise<IPaginatedEntity<IShowroom>>
+    findShowroomByName(name: string, page: IPagination): Promise<IPaginatedEntity<IShowroom>>
+    findAll():Promise<IShowroom[]>
  }

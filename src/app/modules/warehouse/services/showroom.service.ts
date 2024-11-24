@@ -29,6 +29,11 @@ export class ShowroomService {
         return await this.showroomRepo.findAllwithpaginate(page);
     }
 
+    // Get All Showrooms List
+    async findAll(): Promise<IShowroom[]> {
+        return await this.showroomRepo.findAll();
+    }
+
     // Get Showroom by Id
     async findById(id: number): Promise<IShowroom> {
         return await this.showroomRepo.getOneById(id);
@@ -38,5 +43,10 @@ export class ShowroomService {
     async update(id: number, updateDto: UpdateShowroom): Promise<IShowroom> {
         const showroom: IShowroom = await this.findById(id);
         return await this.showroomRepo.updateAndGetEntity(showroom.id, updateDto);
+    }
+
+     // Get All Showrooms By name
+     async findAllByNameWithPagination(name:string,page: IPagination): Promise<IPaginatedEntity<IShowroom>> {
+        return await this.showroomRepo.findShowroomByName(name,page);
     }
 }

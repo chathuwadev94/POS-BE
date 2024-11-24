@@ -16,4 +16,5 @@ export interface IUser extends IBaseModel {
     sales?: ISale[];
     showroomId?: number;
     showroom?: IShowroom;
+    phoneNumber?: string;
 }

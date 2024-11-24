@@ -68,6 +68,25 @@ export class UserController {
     return await this.userSer.findUserWithShowroomById(currentUser.id);
   }
 
+   // Search User
+   @Get('user-search')
+   @UseGuards(JwtAuthGuard, ACGuard)
+   @UseRoles({
+     resource: UserController.name,
+     action: 'read',
+     possession: "own"
+   })
+   @UseInterceptors(new TransformInterceptor(new ViewUserDto()))
+   @ApiOperation({ description: 'Get User by NIC' })
+   @ApiCreatedResponse({ type: UserResponseDto, description: 'Get Userby NIC' })
+   @HttpCode(200)
+   async getUserByNIC(
+     @Query() filter: UserFilterDto,
+     @Pager() pagination: IPagination,
+     @Query('nic') nic: string) {
+     return await this.userSer.userSearchByNIC(nic, pagination);
+   }
+
   // Get User By Id
   @Get(':id')
   @UseGuards(JwtAuthGuard, ACGuard)
@@ -100,24 +119,7 @@ export class UserController {
     return await this.userSer.update(id, updateUserDto);
   }
 
-  // Search User
-  @Get('user-search')
-  @UseGuards(JwtAuthGuard, ACGuard)
-  @UseRoles({
-    resource: UserController.name,
-    action: 'read',
-    possession: "own"
-  })
-  @UseInterceptors(new TransformInterceptor(new ViewUserDto()))
-  @ApiOperation({ description: 'Get User by NIC' })
-  @ApiCreatedResponse({ type: UserResponseDto, description: 'Get Userby NIC' })
-  @HttpCode(200)
-  async getUserByNIC(
-    @Query() filter: UserFilterDto,
-    @Pager() pagination: IPagination,
-    @Query('nic') nic: string) {
-    return await this.userSer.userSearchByNIC(nic, pagination);
-  }
+ 
 
 
 }

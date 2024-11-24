@@ -37,6 +37,9 @@ export class User extends BaseEntity {
     @Column({ length: 200 })
     password: string;
 
+    @Column({ length: 200, nullable: true })
+    phoneNumber: string;
+
     @Column()
     showroomId: number;
 

@@ -8,6 +8,7 @@ import { ItemController } from 'src/app/modules/items/controllers/item.controlle
 import { StockController } from 'src/app/modules/warehouse/controllers/stock.controller';
 import { WarehouseController } from 'src/app/modules/warehouse/controllers/warehouse.controller';
 import { SaleController } from 'src/app/modules/sales/controller/sale.controller';
+import { ShowroomController } from 'src/app/modules/warehouse/controllers/showroom.controller';
 
 export const roles: RolesBuilder = new RolesBuilder();
 
@@ -21,7 +22,7 @@ roles
 
     .grant([AppRoles.ADMIN])
     .createOwn([UserController.name,AuthController.name,CategoryController.name,BarcodeController.name,ItemController.name,StockController.name,WarehouseController.name])
-    .readOwn([UserController.name,AuthController.name,CategoryController.name,BarcodeController.name,ItemController.name,StockController.name,WarehouseController.name])
+    .readOwn([UserController.name,AuthController.name,CategoryController.name,BarcodeController.name,ItemController.name,StockController.name,WarehouseController.name,ShowroomController.name])
     .updateOwn([UserController.name,AuthController.name,CategoryController.name,BarcodeController.name,ItemController.name,StockController.name,WarehouseController.name])
     .deleteOwn([UserController.name,AuthController.name,CategoryController.name,BarcodeController.name,ItemController.name,StockController.name,WarehouseController.name])
 

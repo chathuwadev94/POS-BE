@@ -22,7 +22,6 @@ export class UserService {
             throw new BadRequestException('User name already exist..')
         }
         userDto.password = await this.hashPassword(userDto.password);
-        userDto.roles = [AppRoles.DEFAULT];
         return await this.userRepo.create(userDto);
     }
 

@@ -13,8 +13,9 @@ export class ViewUserDto {
       status: data.status,
       roles: data.roles || [],
       userName: data.userName || null,
-      showroomI:data.showroomId || null,
-      showroom:data.showroom || null
+      showroomId:data.showroomId || null,
+      showroom:data.showroom || null,
+      phoneNumber:data.phoneNumber || null,
     };
   }
 }
