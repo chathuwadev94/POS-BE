@@ -19,7 +19,7 @@ export class UserRepository
   }
 
   async findByUserName(userName: string): Promise<IUser> {
-    return await this.getOne({ userName: userName },{},['showroom']);
+    return await this.getOne({ userName: userName }, {}, ['showroom']);
   }
 
   async findUserWithShowroomById(id: number): Promise<IUser> {
@@ -36,11 +36,11 @@ export class UserRepository
   }
 
   async findAllwithpaginate(paginate: IPagination): Promise<IPaginatedEntity<IUser>> {
-    return await this.getAllwithPaginate({}, {}, [], {}, paginate);
+    return await this.getAllwithPaginate({}, {}, ['showroom'], {}, paginate);
   }
 
   async findUsersByNIC(nic: string, paginate: IPagination): Promise<IPaginatedEntity<IUser>> {
-    return await this.getAllwithPaginate({ nic: Like(`%${nic}%`) }, {}, [], {}, paginate);
+    return await this.getAllwithPaginate({ nic: Like(`%${nic}%`) }, {}, ['showroom'], {}, paginate);
 
   }
 

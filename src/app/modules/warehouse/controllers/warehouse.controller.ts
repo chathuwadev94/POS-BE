@@ -57,6 +57,39 @@ export class WarehouseController {
         return await this.warehouseServ.findAllWithPagination(pagination);
     }
 
+    @Get('findAll')
+    @UseGuards(JwtAuthGuard, ACGuard)
+    @UseRoles({
+        resource: WarehouseController.name,
+        action: 'read',
+        possession: "own",
+    })
+    @UseInterceptors(new TransformInterceptor(new ViewWarehouseDto()))
+    @ApiOperation({ description: 'Get All Warehouse List' })
+    @ApiCreatedResponse({ type: [ResponseWarehouseDto], description: 'Get All Warehouse List' })
+    async getAllList() {
+        return await this.warehouseServ.findAll();
+    }
+
+    // Search Warehouse by Location
+    @Get('warehouse-search')
+    @UseGuards(JwtAuthGuard, ACGuard)
+    @UseRoles({
+        resource: WarehouseController.name,
+        action: 'read',
+        possession: "own"
+    })
+    @UseInterceptors(new TransformInterceptor(new ViewWarehouseDto()))
+    @ApiOperation({ description: 'Get Warehouse by Location' })
+    @ApiCreatedResponse({ type: ResponseWarehouseDto, description: 'Get Warehouse by Location' })
+    @HttpCode(200)
+    async getWarehouseByLocation(
+        @Query() filter: WarehouseFilterDto,
+        @Pager() pagination: IPagination,
+        @Query('location') location: string) {
+        return await this.warehouseServ.searchWarehouseByLocation(location, pagination);
+    }
+
     // Get Warehouse By Id
     @Get(':id')
     @UseGuards(JwtAuthGuard, ACGuard)
@@ -89,22 +122,5 @@ export class WarehouseController {
         return await this.warehouseServ.update(id, updateUserDto);
     }
 
-    // Search Warehouse by Location
-    @Get('warehouse-search')
-    @UseGuards(JwtAuthGuard, ACGuard)
-    @UseRoles({
-        resource: WarehouseController.name,
-        action: 'read',
-        possession: "own"
-    })
-    @UseInterceptors(new TransformInterceptor(new ViewWarehouseDto()))
-    @ApiOperation({ description: 'Get Warehouse by Location' })
-    @ApiCreatedResponse({ type: ResponseWarehouseDto, description: 'Get Warehouse by Location' })
-    @HttpCode(200)
-    async getWarehouseByLocation(
-        @Query() filter: WarehouseFilterDto,
-        @Pager() pagination: IPagination,
-        @Query('location') location: string) {
-        return await this.warehouseServ.searchWarehouseByLocation(location, pagination);
-    }
+
 }

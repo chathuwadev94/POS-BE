@@ -2,7 +2,7 @@ import { BaseRepository } from "src/app/core/repositories/base-repository";
 import { Warehouse } from "../entities/warehouse.entity";
 import { IWarehouseRepository } from "../interfaces/warehouse-repository.interface";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Like, Repository } from "typeorm";
+import { ILike, Like, Repository } from "typeorm";
 import { IPagination } from "src/app/core/interfaces/page.interface";
 import { IPaginatedEntity } from "src/app/core/interfaces/paginated-entity.interface";
 import { IWarehouse } from "../interfaces/warehouse.interface";
@@ -22,7 +22,11 @@ export class WarehouseRepositorty
     }
 
     async searchWarehouseByLocation(location: string, page: IPagination): Promise<IPaginatedEntity<IWarehouse>> {
-        return await this.getAllwithPaginate({ location: Like(`%${location}%`) }, {}, [], {}, page);
+        return await this.getAllwithPaginate({ location: ILike(`%${location}%`) }, {}, [], {}, page);
+    }
+
+    async findAll(): Promise<IWarehouse[]> {
+        return await this.warehouseRepo.find();
     }
 
 }

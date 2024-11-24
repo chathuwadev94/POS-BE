@@ -9,4 +9,5 @@ export interface IShowroom extends IBaseModel {
     location?: string;
     warehouse?: IWarehouse;
     users?: IUser[];
+    phoneNumber?: string;
 }

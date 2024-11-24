@@ -23,6 +23,11 @@ export class WarehouseService {
         return await this.warehouseRepo.findAllwithpaginate(page);
     }
 
+    // Get All Warehouse List
+    async findAll(): Promise<IWarehouse[]> {
+        return await this.warehouseRepo.findAll();
+    }
+
     // Find By Id
     async findById(id: number): Promise<IWarehouse> {
         return await this.warehouseRepo.getOneById(id);

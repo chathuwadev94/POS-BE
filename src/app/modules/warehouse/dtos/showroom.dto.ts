@@ -28,6 +28,13 @@ export class CreateShowroom {
         required: true,
     })
     location: string;
+
+    @ApiProperty({
+        type: String,
+        description: 'Hotline of Showroom',
+        required: true,
+    })
+    phoneNumber?: string;
 }
 
 export class UpdateShowroom extends CreateShowroom {

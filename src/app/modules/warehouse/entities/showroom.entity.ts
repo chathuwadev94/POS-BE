@@ -21,6 +21,9 @@ export class Showroom extends BaseEntity {
     @Column()
     location: string;
 
+    @Column({ length: 200, nullable: true })
+    phoneNumber: string;
+
     @ManyToOne(() => Warehouse, warehouse => warehouse.showrooms)
     warehouse: Warehouse;
 

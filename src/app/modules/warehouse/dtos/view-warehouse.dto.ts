@@ -7,7 +7,8 @@ export class ViewWarehouseDto {
             location: data.location,
             name: data.name,
             capacity: data.capacity,
-            stocks: data.stocks
+            stocks: data.stocks,
+            address: data.address,
         };
     }
 } 

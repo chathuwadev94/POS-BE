@@ -8,7 +8,9 @@ export class ViewShowroomDto {
             location: data.location || null,
             warehouseId: data.warehouseId || null,
             warehouse: data.warehouse || null,
-            users: data.users || []
+            users: data.users || [],
+            name: data.name || null,
+            phoneNumber: data.phoneNumber || null,
 
         };
     }

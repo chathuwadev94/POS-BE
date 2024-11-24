@@ -5,7 +5,8 @@ import { IPaginatedEntity } from "src/app/core/interfaces/paginated-entity.inter
 import { IWarehouse } from "./warehouse.interface";
 
 export const IWarehouseRepositoryInterface = 'IWarehouseRepository';
-export interface IWarehouseRepository extends IBaseRepository<Warehouse> { 
+export interface IWarehouseRepository extends IBaseRepository<Warehouse> {
     findAllwithpaginate(paginate: IPagination): Promise<IPaginatedEntity<IWarehouse>>
     searchWarehouseByLocation(location: string, page: IPagination): Promise<IPaginatedEntity<IWarehouse>>
+    findAll(): Promise<IWarehouse[]>
 }
