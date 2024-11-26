@@ -2,7 +2,7 @@ import { BaseRepository } from "src/app/core/repositories/base-repository";
 import { Category } from "../entities/category.entity";
 import { ICategoryRepository } from "../interfaces/category-repository.interface";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { ILike, Repository } from "typeorm";
 import { IPagination } from "src/app/core/interfaces/page.interface";
 import { IPaginatedEntity } from "src/app/core/interfaces/paginated-entity.interface";
 import { ICategory } from "../interfaces/category.interface";
@@ -18,5 +18,13 @@ export class CategoryRepository extends BaseRepository<Category>
     async findAllWithPaginate(page: IPagination): Promise<IPaginatedEntity<ICategory>> {
         return await this.getAllwithPaginate({}, {}, [], {}, page);
     }
-    
+
+    async searchCategoryByName(name: string, page: IPagination): Promise<IPaginatedEntity<ICategory>> {
+        return await this.getAllwithPaginate({ name: ILike(`%${name}%`) }, {}, [], {}, page);
+    }
+
+    async findAll(): Promise<ICategory[]> {
+        return await this.categoryRepo.find();
+    }
+
 }

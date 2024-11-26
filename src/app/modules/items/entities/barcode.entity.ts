@@ -14,6 +14,9 @@ export class Barcode extends BaseEntity {
     @Column()
     type: number;
 
+    @Column({ nullable: true })
+    typeName: string;
+
     @OneToOne(() => Item, item => item.barcode)
     item: Item;
 }

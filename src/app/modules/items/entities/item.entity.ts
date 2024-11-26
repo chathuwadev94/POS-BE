@@ -16,10 +16,10 @@ export class Item extends BaseEntity {
     @Column()
     description: string;
 
-    @Column()
+    @Column({ nullable: true })
     cost: number;
 
-    @Column()
+    @Column({ nullable: true })
     image: string;
 
     @Column()
@@ -28,7 +28,7 @@ export class Item extends BaseEntity {
     @ManyToOne(() => Category, category => category.item)
     category: Category
 
-    @OneToOne(() => Barcode, barcode => barcode.item,{cascade: true})
+    @OneToOne(() => Barcode, barcode => barcode.item)
     @JoinColumn()
     barcode: Barcode;
 

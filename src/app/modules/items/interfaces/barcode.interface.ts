@@ -6,4 +6,5 @@ export interface IBarcode extends IBaseModel {
     code?: string;
     type?: number;
     item?: IItem;
+    typeName?: string;
 }

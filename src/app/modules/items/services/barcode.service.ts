@@ -1,9 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { IBarcodeRepository, IBarcodeRepositoryInterface } from '../interfaces/barcode-repository.interface';
 import { CreateBarcodeDto, UpdateBarcodeDto } from '../dtos/barcode.dto';
 import { IBarcode } from '../interfaces/barcode.interface';
 import { ItemService } from './item.service';
 import { IItem } from '../interfaces/item.interface';
+import { IPagination } from 'src/app/core/interfaces/page.interface';
+import { IPaginatedEntity } from 'src/app/core/interfaces/paginated-entity.interface';
 
 @Injectable()
 export class BarcodeService {
@@ -11,19 +13,27 @@ export class BarcodeService {
     constructor(
         @Inject(`${IBarcodeRepositoryInterface}`)
         private readonly barcodeRepo: IBarcodeRepository,
-        @Inject(ItemService.name)
-        private readonly itemServ: ItemService
     ) { }
 
     // Create Barcode
     async create(createDto: CreateBarcodeDto): Promise<IBarcode> {
-        const item: IItem = await this.itemServ.findById(createDto.itemId);
-        let { itemId, ...rest } = createDto;
-        let create: IBarcode = { ...rest, item: item }
-        return await this.barcodeRepo.create(create);
+        await this.checkBarcode(createDto.code);
+        return await this.barcodeRepo.create(createDto);
     }
 
-    // Get All Barcodes
+    // Check Barcode
+    async checkBarcode(code: string): Promise<any> {
+        let isCode: IBarcode = await this.barcodeRepo.findByCode(code);
+        if (isCode) {
+            throw new BadRequestException('Barcode already exists..');
+        }
+        return
+    }
+
+    // Get All Barcode List
+    async findAll(): Promise<IBarcode[]> {
+        return await this.barcodeRepo.findAll();
+    }
 
     // Get Barcode by Id
     async findById(id: number): Promise<IBarcode> {
@@ -40,6 +50,23 @@ export class BarcodeService {
         return await this.barcodeRepo.deleteById(id);
     }
 
-    // Find All Barcodes by Item
+    // Get All Barcode
+    async findAllWithPaginate(page: IPagination): Promise<IPaginatedEntity<IBarcode>> {
+        return this.barcodeRepo.findAllWithPaginate(page);
+    }
+
+    // Search Barcode By Code
+    async searchBycode(code: string, page: IPagination): Promise<IPaginatedEntity<IBarcode>> {
+        return await this.barcodeRepo.searchBarcodeByCode(code, page);
+    }
+
+    // check codde 
+    async checkCode(code: string): Promise<boolean> {
+        let isCode: IBarcode = await this.barcodeRepo.findByCode(code);
+        if (isCode) {
+            return true;
+        }
+        else false;
+    }
 
 }

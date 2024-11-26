@@ -39,5 +39,16 @@ export class CategoryService {
         return await this.categoryRepo.deleteById(category.id);
     }
 
-    
+    // Get All Category List
+    async findAll(): Promise<ICategory[]> {
+        return await this.categoryRepo.findAll();
+    }
+
+    // Search Category By Location
+    async searchByLocation(location: string, page: IPagination): Promise<IPaginatedEntity<ICategory>> {
+        return await this.categoryRepo.searchCategoryByName(location, page);
+    }
+
+
+
 }

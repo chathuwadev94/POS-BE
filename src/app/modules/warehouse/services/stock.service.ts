@@ -56,7 +56,7 @@ export class StockService {
     }
 
     // Find Stock By Barcode Value and WarehouseId
-    async findStockByBarcodeAndWarehouseId(barcode: number, warehouseId: number): Promise<IStock> {
+    async findStockByBarcodeAndWarehouseId(barcode: string, warehouseId: number): Promise<IStock> {
         const stock: IStock = await this.stockRepo.findStockByItemBarcodeAndWarehouseId(barcode, warehouseId);
         if (!stock) {
             throw new NotFoundException(`Out of Stock...`);

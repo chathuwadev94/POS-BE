@@ -3,30 +3,37 @@ import { BarcodeType } from "../enums/barcode-type.enum";
 
 export class CreateBarcodeDto {
     @ApiProperty({
-        type:String,
+        type: String,
         description: 'Unique barcode number',
         required: true,
     })
-    code:string;
+    code: string;
 
     @ApiProperty({
-        type:Number,
-        enum:BarcodeType,
+        type: Number,
+        enum: BarcodeType,
         description: 'Barcode Type',
         required: true,
     })
-    type:number;
+    type: number;
 
     @ApiProperty({
-        type:Number,
+        type: Number,
         description: 'Item Id',
         required: true,
     })
-    itemId:number;
+    itemId?: number;
+
+    @ApiProperty({
+        type: String,
+        description: 'Barcode Type Name',
+        required: true,
+    })
+    typeName: string;
 
 
 }
 
 export class UpdateBarcodeDto extends CreateBarcodeDto {
-    
+
 }

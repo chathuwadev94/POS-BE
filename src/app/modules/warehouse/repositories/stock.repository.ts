@@ -30,7 +30,7 @@ export class StockRepository
         return await this.getOne({ itemId: itemId })
     }
 
-    async findStockByItemBarcodeAndWarehouseId(barcodeValue: number, warehouseId: number): Promise<IStock> {
+    async findStockByItemBarcodeAndWarehouseId(barcodeValue: string, warehouseId: number): Promise<IStock> {
         return await this.stockRepo
             .createQueryBuilder('stock')
             .innerJoinAndSelect('stock.item', 'item')  // Join the item to get its relation

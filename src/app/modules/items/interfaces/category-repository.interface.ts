@@ -7,4 +7,6 @@ import { ICategory } from "./category.interface";
 export const ICategoryRepositoryInterface = 'ICategoryRepository'
 export interface ICategoryRepository extends IBaseRepository<Category> {
     findAllWithPaginate(page: IPagination): Promise<IPaginatedEntity<ICategory>>
+    searchCategoryByName(name: string, page: IPagination): Promise<IPaginatedEntity<ICategory>>
+    findAll(): Promise<ICategory[]>
 }

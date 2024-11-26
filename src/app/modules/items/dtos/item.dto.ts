@@ -1,4 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { ICategory } from "../interfaces/category.interface";
+import { IBarcode } from "../interfaces/barcode.interface";
 
 export class CreateItemDto {
     @ApiProperty({
@@ -33,10 +35,25 @@ export class CreateItemDto {
         description: 'Category Id',
         required: true,
     })
-    categoryId: number
+    categoryId?: number;
+
+    @ApiProperty({
+        type: Number,
+        description: 'Barcode Id',
+        required: true,
+    })
+    barcodeId?: number;
+
+    @ApiProperty({
+        type: String,
+        description: 'Item Manufacture',
+        required: true,
+    })
+    manufactur?: string;
 }
 
 
 export class UpdateItemDto extends CreateItemDto {
-
+    category?: ICategory;
+    barcode?: IBarcode
 }

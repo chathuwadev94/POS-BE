@@ -11,4 +11,5 @@ export interface IItemRepository extends IBaseRepository<Item> {
     searchItemByBarcode(code: string, page: IPagination): Promise<IPaginatedEntity<IItem>>
     findItemsbyCategory(categoryId: number, page: IPagination): Promise<IPaginatedEntity<IItem>>
     findByIdList(idList: number[]): Promise<IItem[]>
+    findItemWithAllById(id: number): Promise<IItem>
 }

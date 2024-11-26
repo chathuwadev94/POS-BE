@@ -2,7 +2,7 @@ import { BaseRepository } from "src/app/core/repositories/base-repository";
 import { Item } from "../entities/item.entity";
 import { IItemRepository } from "../interfaces/item-repository.interface";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Like, Repository } from "typeorm";
+import { ILike, Like, Repository } from "typeorm";
 import { IPagination } from "src/app/core/interfaces/page.interface";
 import { IPaginatedEntity } from "src/app/core/interfaces/paginated-entity.interface";
 import { IItem } from "../interfaces/item.interface";
@@ -21,11 +21,11 @@ export class ItemRepository
     }
 
     async searchItemByName(name: string, page: IPagination): Promise<IPaginatedEntity<IItem>> {
-        return await this.getAllwithPaginate({ name: Like(`${name}%`) }, {}, ['category', 'barcode'], {}, page);
+        return await this.getAllwithPaginate({ name: ILike(`%${name}%`) }, {}, ['category', 'barcode'], {}, page);
     }
 
     async searchItemByBarcode(code: string, page: IPagination): Promise<IPaginatedEntity<IItem>> {
-        return await this.getAllwithPaginate({ barcode: { code: Like(`${code}%`) } }, {}, ['category', 'barcode'], {}, page);
+        return await this.getAllwithPaginate({ barcode: { code: ILike(`${code}%`) } }, {}, ['category', 'barcode'], {}, page);
     }
 
     async findItemsbyCategory(categoryId: number, page: IPagination): Promise<IPaginatedEntity<IItem>> {
@@ -37,6 +37,10 @@ export class ItemRepository
             .createQueryBuilder('item')
             .where('item.id IN (:...idList)', { idList: idList })
             .getMany();
+    }
+
+    async findItemWithAllById(id: number): Promise<IItem> {
+        return this.getOneById(id, {}, ['category', 'barcode'])
     }
 
 }

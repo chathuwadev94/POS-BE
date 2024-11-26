@@ -57,6 +57,39 @@ export class CategoryController {
         return await this.categoryServ.findAllWithPaginate(page);
     }
 
+
+    @Get('findAll')
+    @UseGuards(JwtAuthGuard, ACGuard)
+    @UseRoles({
+        resource: CategoryController.name,
+        action: 'read',
+        possession: "own",
+    })
+    @UseInterceptors(new TransformInterceptor(new ViewCategoryDto()))
+    @ApiOperation({ description: 'Get All Category List' })
+    @ApiCreatedResponse({ type: [ResponseCategoryDto], description: 'Get All Category List' })
+    async getAllList() {
+        return await this.categoryServ.findAll();
+    }
+
+    @Get('search-name')
+    @UseGuards(JwtAuthGuard, ACGuard)
+    @UseRoles({
+        resource: CategoryController.name,
+        action: 'read',
+        possession: "own",
+    })
+    @UseInterceptors(new TransformInterceptor(new ViewCategoryDto()))
+    @ApiOperation({ description: 'Get All Category By Name' })
+    @ApiCreatedResponse({ type: [ResponseCategoryDto], description: 'Get All Category By Name' })
+    async getAllByname(
+        @Query() filter: CategoryFilterDto,
+        @Pager() pagination: IPagination,
+        @Query('name') name: string
+    ) {
+        return await this.categoryServ.searchByLocation(name, pagination);
+    }
+
     // Get Category by Id
     @Get(':id')
     @UseGuards(JwtAuthGuard, ACGuard)
@@ -69,7 +102,7 @@ export class CategoryController {
     @ApiOperation({ description: "Get category by id" })
     @ApiCreatedResponse({ type: ResponseCategoryDto, description: "Get category by id" })
     async getbyId(
-        @Param() id: number
+        @Param('id') id: number
     ): Promise<ICategory> {
         return await this.categoryServ.findById(id);
     }
@@ -86,7 +119,7 @@ export class CategoryController {
     @ApiOperation({ description: "Update Category" })
     @ApiCreatedResponse({ type: ResponseCategoryDto, description: "Update Category" })
     async update(
-        @Param() id: number,
+        @Param('id') id: number,
         @Body() updateCategoryDto: UpdateCategoryDto
     ): Promise<ICategory> {
         return await this.categoryServ.update(id, updateCategoryDto);
@@ -104,7 +137,7 @@ export class CategoryController {
     @ApiOperation({ description: "Delete Category" })
     @ApiCreatedResponse({ type: ResponseCategoryDto, description: "Delete Category" })
     async delete(
-        @Param() id: number,
+        @Param('id') id: number,
     ): Promise<boolean> {
         return await this.categoryServ.delete(id);
     }

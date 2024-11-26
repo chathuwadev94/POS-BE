@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IItemRepository, IItemRepositoryInterface } from '../interfaces/item-repository.interface';
-import { StockService } from '../../warehouse/services/stock.service';
 import { CategoryService } from './category.service';
 import { CreateItemDto, UpdateItemDto } from '../dtos/item.dto';
 import { IItem } from '../interfaces/item.interface';
 import { ICategory } from '../interfaces/category.interface';
-import { IStock } from '../../warehouse/interfaces/stock.interface';
 import { IPagination } from 'src/app/core/interfaces/page.interface';
 import { IPaginatedEntity } from 'src/app/core/interfaces/paginated-entity.interface';
+import { IBarcode } from '../interfaces/barcode.interface';
+import { BarcodeService } from './barcode.service';
 
 @Injectable()
 export class ItemService {
@@ -16,14 +16,17 @@ export class ItemService {
         @Inject(`${IItemRepositoryInterface}`)
         private readonly itemRepo: IItemRepository,
         @Inject(CategoryService.name)
-        private readonly categoryServ: CategoryService
+        private readonly categoryServ: CategoryService,
+        @Inject(BarcodeService.name)
+        private readonly barcodeServ: BarcodeService
     ) { }
 
     // Create Item
     async create(createDto: CreateItemDto): Promise<IItem> {
         const category: ICategory = await this.categoryServ.findById(createDto.categoryId);
-        let { categoryId, ...rest } = createDto;
-        let create: IItem = { ...rest, category: category };
+        const barcode: IBarcode = await this.barcodeServ.findById(createDto.barcodeId)
+        let { categoryId, barcodeId, ...rest } = createDto;
+        let create: IItem = { ...rest, category: category, barcode: barcode };
         return await this.itemRepo.create(create);
     }
 
@@ -34,11 +37,23 @@ export class ItemService {
 
     // Get Item by Id
     async findById(id: number): Promise<IItem> {
-        return await this.itemRepo.getOneById(id);
+        return await this.itemRepo.findItemWithAllById(id);
     }
 
     // Update Item
     async update(id: number, updateDto: UpdateItemDto): Promise<IItem> {
+        if (updateDto.categoryId) {
+            let category: ICategory = await this.categoryServ.findById(updateDto.categoryId);
+            let { categoryId, ...rest } = updateDto;
+            let create: UpdateItemDto = { ...rest, category: category };
+            updateDto = create;
+        }
+        if (updateDto.barcodeId) {
+            const barcode: IBarcode = await this.barcodeServ.findById(updateDto.barcodeId)
+            let { barcodeId, ...rest } = updateDto;
+            let create: UpdateItemDto = { ...rest, barcode: barcode };
+            updateDto = create;
+        }
         return await this.itemRepo.updateAndGetEntity(id, updateDto)
     }
 

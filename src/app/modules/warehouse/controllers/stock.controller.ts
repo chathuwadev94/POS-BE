@@ -111,7 +111,7 @@ export class StockController {
         @Query('barcode') barcode: string,
         @CurrentUser() user: ITokenUser
     ) {
-        return await this.stockServ.findStockByBarcodeAndWarehouseId(parseInt(barcode), user.warehouseId);
+        return await this.stockServ.findStockByBarcodeAndWarehouseId(barcode, user.warehouseId);
     }
 
     // Get Stocke By Id
