@@ -31,4 +31,8 @@ export class BarcodeRepository extends BaseRepository<Barcode>
         return await this.getOne({ code: code });
     }
 
+    async getOneWithItemById(id: number): Promise<IBarcode> {
+        return await this.getOneById(id, {}, ['item']);
+    }
+
 }

@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { IStockRepository, IStockRepositoryInterface } from '../interfaces/stock-repository.interface';
 import { CreateStockDto, UpdateStockDto } from '../dtos/create-stocks.dto';
 import { IStock } from '../interfaces/stock.interface';
@@ -6,6 +6,9 @@ import { WarehouseService } from './warehouse.service';
 import { IPagination } from 'src/app/core/interfaces/page.interface';
 import { IPaginatedEntity } from 'src/app/core/interfaces/paginated-entity.interface';
 import { ISaleItemDetails } from '../../sales/interfaces/sale.interface';
+import { ItemService } from '../../items/services/item.service';
+import { IItem } from '../../items/interfaces/item.interface';
+import { IWarehouse } from '../interfaces/warehouse.interface';
 
 @Injectable()
 export class StockService {
@@ -14,13 +17,19 @@ export class StockService {
         @Inject(`${IStockRepositoryInterface}`)
         private readonly stockRepo: IStockRepository,
         @Inject(WarehouseService.name)
-        private readonly warehouseServ: WarehouseService
+        private readonly warehouseServ: WarehouseService,
+        @Inject(forwardRef(() => ItemService.name))
+        private readonly itemServ: ItemService
     ) { }
 
     // Create Stock
     async create(createDto: CreateStockDto): Promise<IStock> {
-        const warehouse = await this.warehouseServ.findById(createDto.warehouseId);
-        let stock: IStock = { ...createDto, warehouse: warehouse };
+        const warehouse: IWarehouse = await this.warehouseServ.findById(createDto.warehouseId);
+        const item: IItem = await this.itemServ.findById(createDto.itemId)
+        if (!warehouse && !item) {
+            throw new NotFoundException('Item or Warehouse not found...')
+        }
+        let stock: IStock = { ...createDto, warehouse: warehouse, item: item };
         return await this.stockRepo.create(stock);
     }
 

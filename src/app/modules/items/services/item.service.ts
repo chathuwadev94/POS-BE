@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { IItemRepository, IItemRepositoryInterface } from '../interfaces/item-repository.interface';
 import { CategoryService } from './category.service';
 import { CreateItemDto, UpdateItemDto } from '../dtos/item.dto';
@@ -50,6 +50,9 @@ export class ItemService {
         }
         if (updateDto.barcodeId) {
             const barcode: IBarcode = await this.barcodeServ.findById(updateDto.barcodeId)
+            if(barcode.item){
+                throw new BadRequestException("Barcode is reserved by another Item...")
+            }
             let { barcodeId, ...rest } = updateDto;
             let create: UpdateItemDto = { ...rest, barcode: barcode };
             updateDto = create;

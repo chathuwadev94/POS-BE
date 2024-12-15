@@ -19,11 +19,11 @@ export class StockRepository
 
 
     async findAllwithpaginate(paginate: IPagination): Promise<IPaginatedEntity<IStock>> {
-        return await this.getAllwithPaginate({}, {}, [], {}, paginate);
+        return await this.getAllwithPaginate({}, {}, ['warehouse','item'], {}, paginate);
     }
 
     async searchStockById(id: number, page: IPagination): Promise<IPaginatedEntity<IStock>> {
-        return await this.getAllwithPaginate({ id: id }, {}, [], {}, page);
+        return await this.getAllwithPaginate({ id: id }, {}, ['warehouse','item'], {}, page);
     }
 
     async findSockByItemId(itemId: number): Promise<IStock> {

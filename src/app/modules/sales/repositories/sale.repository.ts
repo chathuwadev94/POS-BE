@@ -19,13 +19,17 @@ export class SaleRepository extends BaseRepository<Sale>
         return await this.getAllwithPaginate({ user: { id: userId } }, {}, ['user'], {}, page);
     }
 
-    
-    // async findByDateRange(startDate:Date,endDate:Date){
-    //     return await this.getAllwithPaginate({ date }, {}, ['user'], {}, page);
-    //     return await this.saleRepo
-    //     .createQueryBuilder('sale')
-    //     .where('sale.date >= :startDate', { startDate })
-    //     .andWhere('sale.date <= :endDate', { endDate })
-    //     .getMany();
-    // }
+    async findAllWithpaginate(page: IPagination): Promise<IPaginatedEntity<ISale>> {
+        return await this.getAllwithPaginate({}, {}, ['user', 'sale-item'], {}, page);
+    }
+
+
+    async findByDateRange(startDate: Date, endDate: Date, page: IPagination): Promise<IPaginatedEntity<ISale>> {
+        return await this.getAllwithPaginate({ date: { gt: startDate } }, {}, ['user'], {}, page);
+        // return await this.saleRepo
+        // .createQueryBuilder('sale')
+        // .where('sale.date >= :startDate', { startDate })
+        // .andWhere('sale.date <= :endDate', { endDate })
+        // .getMany();
+    }
 }

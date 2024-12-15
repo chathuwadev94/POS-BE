@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Warehouse } from './entities/warehouse.entity';
 import { Stock } from './entities/stock.entity';
@@ -15,10 +15,12 @@ import { showroomRepository } from './repositories/showroom.repository';
 import { Showroom } from './entities/showroom.entity';
 import { ShowroomController } from './controllers/showroom.controller';
 import { ShowroomService } from './services/showroom.service';
+import { ItemModule } from '../items/item.module';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Warehouse, Stock, Showroom])
+        TypeOrmModule.forFeature([Warehouse, Stock, Showroom]),
+        forwardRef(()=>ItemModule)
     ],
     controllers: [StockController, WarehouseController, ShowroomController],
     providers: [

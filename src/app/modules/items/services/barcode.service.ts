@@ -37,7 +37,7 @@ export class BarcodeService {
 
     // Get Barcode by Id
     async findById(id: number): Promise<IBarcode> {
-        return await this.barcodeRepo.getOneById(id);
+        return await this.barcodeRepo.getOneWithItemById(id);
     }
 
     // Update Barcode

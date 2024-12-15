@@ -10,4 +10,5 @@ export interface IBarcodeRepository extends IBaseRepository<Barcode> {
     findAllWithPaginate(page: IPagination): Promise<IPaginatedEntity<IBarcode>>
     searchBarcodeByCode(code: string, page: IPagination): Promise<IPaginatedEntity<IBarcode>>
     findByCode(code: string): Promise<IBarcode>
+    getOneWithItemById(id: number): Promise<IBarcode>
 }
